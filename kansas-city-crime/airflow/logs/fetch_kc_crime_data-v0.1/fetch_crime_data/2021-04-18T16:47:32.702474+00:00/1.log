@@ -1,0 +1,26 @@
+[2021-04-18 16:51:53,142] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.fetch_crime_data 2021-04-18T16:47:32.702474+00:00 [queued]>
+[2021-04-18 16:51:53,155] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.fetch_crime_data 2021-04-18T16:47:32.702474+00:00 [queued]>
+[2021-04-18 16:51:53,156] {taskinstance.py:1042} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 16:51:53,157] {taskinstance.py:1043} INFO - Starting attempt 1 of 1
+[2021-04-18 16:51:53,157] {taskinstance.py:1044} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 16:51:53,192] {taskinstance.py:1063} INFO - Executing <Task(PythonOperator): fetch_crime_data> on 2021-04-18T16:47:32.702474+00:00
+[2021-04-18 16:51:53,197] {standard_task_runner.py:52} INFO - Started process 481 to run task
+[2021-04-18 16:51:53,203] {standard_task_runner.py:76} INFO - Running: ['airflow', 'tasks', 'run', 'fetch_kc_crime_data-v0.1', 'fetch_crime_data', '2021-04-18T16:47:32.702474+00:00', '--job-id', '8', '--pool', 'default_pool', '--raw', '--subdir', 'DAGS_FOLDER/fetch_kc_crime_data-v0.1.py', '--cfg-path', '/tmp/tmplyqlcf9q', '--error-file', '/tmp/tmp2eeqd0yb']
+[2021-04-18 16:51:53,207] {standard_task_runner.py:77} INFO - Job 8: Subtask fetch_crime_data
+[2021-04-18 16:51:53,325] {logging_mixin.py:104} INFO - Running <TaskInstance: fetch_kc_crime_data-v0.1.fetch_crime_data 2021-04-18T16:47:32.702474+00:00 [running]> on host 9651c4896f9f
+[2021-04-18 16:51:53,440] {taskinstance.py:1257} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=airflow
+AIRFLOW_CTX_DAG_ID=fetch_kc_crime_data-v0.1
+AIRFLOW_CTX_TASK_ID=fetch_crime_data
+AIRFLOW_CTX_EXECUTION_DATE=2021-04-18T16:47:32.702474+00:00
+AIRFLOW_CTX_DAG_RUN_ID=manual__2021-04-18T16:47:32.702474+00:00
+[2021-04-18 16:51:53,494] {logging_mixin.py:104} INFO - Min Window: 2021-01-01T00:00:00.000
+[2021-04-18 16:51:53,495] {logging_mixin.py:104} INFO - Max Window: 2021-04-18T16%:51:50.467
+[2021-04-18 16:51:53,497] {logging_mixin.py:104} INFO - {'$where': "report_date BETWEEN '2021-01-01T00:00:00.000' and '2021-04-18T16%:51:50.467'"}
+[2021-04-18 16:51:54,159] {logging_mixin.py:104} INFO - Error in API call
+[2021-04-18 16:51:54,161] {python.py:118} INFO - Done. Returned value was: None
+[2021-04-18 16:51:54,188] {taskinstance.py:1166} INFO - Marking task as SUCCESS. dag_id=fetch_kc_crime_data-v0.1, task_id=fetch_crime_data, execution_date=20210418T164732, start_date=20210418T165153, end_date=20210418T165154
+[2021-04-18 16:51:54,266] {taskinstance.py:1220} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2021-04-18 16:51:54,291] {local_task_job.py:146} INFO - Task exited with return code 0

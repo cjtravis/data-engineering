@@ -1,0 +1,51 @@
+[2021-04-18 16:48:30,612] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.fetch_crime_window 2021-04-18T16:47:32.702474+00:00 [queued]>
+[2021-04-18 16:48:30,658] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.fetch_crime_window 2021-04-18T16:47:32.702474+00:00 [queued]>
+[2021-04-18 16:48:30,659] {taskinstance.py:1042} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 16:48:30,660] {taskinstance.py:1043} INFO - Starting attempt 1 of 1
+[2021-04-18 16:48:30,661] {taskinstance.py:1044} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 16:48:30,673] {taskinstance.py:1063} INFO - Executing <Task(PythonOperator): fetch_crime_window> on 2021-04-18T16:47:32.702474+00:00
+[2021-04-18 16:48:30,679] {standard_task_runner.py:52} INFO - Started process 290 to run task
+[2021-04-18 16:48:30,684] {standard_task_runner.py:76} INFO - Running: ['airflow', 'tasks', 'run', 'fetch_kc_crime_data-v0.1', 'fetch_crime_window', '2021-04-18T16:47:32.702474+00:00', '--job-id', '5', '--pool', 'default_pool', '--raw', '--subdir', 'DAGS_FOLDER/fetch_kc_crime_data-v0.1.py', '--cfg-path', '/tmp/tmpvp65s5lz', '--error-file', '/tmp/tmprpa72olg']
+[2021-04-18 16:48:30,689] {standard_task_runner.py:77} INFO - Job 5: Subtask fetch_crime_window
+[2021-04-18 16:48:30,811] {logging_mixin.py:104} INFO - Running <TaskInstance: fetch_kc_crime_data-v0.1.fetch_crime_window 2021-04-18T16:47:32.702474+00:00 [running]> on host 9651c4896f9f
+[2021-04-18 16:48:31,029] {taskinstance.py:1257} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=airflow
+AIRFLOW_CTX_DAG_ID=fetch_kc_crime_data-v0.1
+AIRFLOW_CTX_TASK_ID=fetch_crime_window
+AIRFLOW_CTX_EXECUTION_DATE=2021-04-18T16:47:32.702474+00:00
+AIRFLOW_CTX_DAG_RUN_ID=manual__2021-04-18T16:47:32.702474+00:00
+[2021-04-18 16:48:31,058] {base.py:74} INFO - Using connection to: id: pg_kcmo_opendata. Host: localhost, Port: 5432, Schema: kcmo, Login: data_user, Password: XXXXXXXX, extra: None
+[2021-04-18 16:48:31,062] {taskinstance.py:1455} ERROR - could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Cannot assign requested address
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/models/taskinstance.py", line 1112, in _run_raw_task
+    self._prepare_and_execute_task_with_callbacks(context, task)
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/models/taskinstance.py", line 1285, in _prepare_and_execute_task_with_callbacks
+    result = self._execute_task(context, task_copy)
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/models/taskinstance.py", line 1315, in _execute_task
+    result = task_copy.execute(context=context)
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/operators/python.py", line 117, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/operators/python.py", line 128, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/fetch_kc_crime_data-v0.1.py", line 38, in fetch_crime_window
+    connection = pg_hook.get_conn()
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/providers/postgres/hooks/postgres.py", line 108, in get_conn
+    self.conn = psycopg2.connect(**conn_args)
+  File "/home/airflow/.local/lib/python3.6/site-packages/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: could not connect to server: Connection refused
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Cannot assign requested address
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+
+[2021-04-18 16:48:31,068] {taskinstance.py:1503} INFO - Marking task as FAILED. dag_id=fetch_kc_crime_data-v0.1, task_id=fetch_crime_window, execution_date=20210418T164732, start_date=20210418T164830, end_date=20210418T164831
+[2021-04-18 16:48:31,186] {local_task_job.py:146} INFO - Task exited with return code 1

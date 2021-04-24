@@ -1,0 +1,26 @@
+[2021-04-18 17:05:34,883] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.download_latest_crime_data 2021-04-18T17:04:01.756171+00:00 [queued]>
+[2021-04-18 17:05:34,902] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.download_latest_crime_data 2021-04-18T17:04:01.756171+00:00 [queued]>
+[2021-04-18 17:05:34,903] {taskinstance.py:1042} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 17:05:34,903] {taskinstance.py:1043} INFO - Starting attempt 2 of 2
+[2021-04-18 17:05:34,904] {taskinstance.py:1044} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 17:05:34,944] {taskinstance.py:1063} INFO - Executing <Task(PythonOperator): download_latest_crime_data> on 2021-04-18T17:04:01.756171+00:00
+[2021-04-18 17:05:34,951] {standard_task_runner.py:52} INFO - Started process 1289 to run task
+[2021-04-18 17:05:34,955] {standard_task_runner.py:76} INFO - Running: ['airflow', 'tasks', 'run', 'fetch_kc_crime_data-v0.1', 'download_latest_crime_data', '2021-04-18T17:04:01.756171+00:00', '--job-id', '18', '--pool', 'default_pool', '--raw', '--subdir', 'DAGS_FOLDER/fetch_kc_crime_data-v0.1.py', '--cfg-path', '/tmp/tmp9fe18yy3', '--error-file', '/tmp/tmpy6umz8qn']
+[2021-04-18 17:05:34,959] {standard_task_runner.py:77} INFO - Job 18: Subtask download_latest_crime_data
+[2021-04-18 17:05:35,061] {logging_mixin.py:104} INFO - Running <TaskInstance: fetch_kc_crime_data-v0.1.download_latest_crime_data 2021-04-18T17:04:01.756171+00:00 [running]> on host 9651c4896f9f
+[2021-04-18 17:05:35,158] {taskinstance.py:1257} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=airflow
+AIRFLOW_CTX_DAG_ID=fetch_kc_crime_data-v0.1
+AIRFLOW_CTX_TASK_ID=download_latest_crime_data
+AIRFLOW_CTX_EXECUTION_DATE=2021-04-18T17:04:01.756171+00:00
+AIRFLOW_CTX_DAG_RUN_ID=manual__2021-04-18T17:04:01.756171+00:00
+[2021-04-18 17:05:35,198] {logging_mixin.py:104} INFO - Min Window: 2021-01-01T00:00:00.000
+[2021-04-18 17:05:35,199] {logging_mixin.py:104} INFO - Max Window: 2021-04-18T17:04:09.313
+[2021-04-18 17:05:35,200] {logging_mixin.py:104} INFO - {'$where': "report_date BETWEEN '2021-01-01T00:00:00.000' and '2021-04-18T17:04:09.313'"}
+[2021-04-18 17:05:35,754] {logging_mixin.py:104} INFO - Output file: /opt/airflow/dags/data/2021-04-18.json
+[2021-04-18 17:05:35,919] {python.py:118} INFO - Done. Returned value was: None
+[2021-04-18 17:05:35,947] {taskinstance.py:1166} INFO - Marking task as SUCCESS. dag_id=fetch_kc_crime_data-v0.1, task_id=download_latest_crime_data, execution_date=20210418T170401, start_date=20210418T170534, end_date=20210418T170535
+[2021-04-18 17:05:36,028] {taskinstance.py:1220} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2021-04-18 17:05:36,054] {local_task_job.py:146} INFO - Task exited with return code 0

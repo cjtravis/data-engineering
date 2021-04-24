@@ -1,0 +1,35 @@
+[2021-04-18 16:51:56,729] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.load_data_raw 2021-04-18T16:47:32.702474+00:00 [queued]>
+[2021-04-18 16:51:56,769] {taskinstance.py:851} INFO - Dependencies all met for <TaskInstance: fetch_kc_crime_data-v0.1.load_data_raw 2021-04-18T16:47:32.702474+00:00 [queued]>
+[2021-04-18 16:51:56,770] {taskinstance.py:1042} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 16:51:56,771] {taskinstance.py:1043} INFO - Starting attempt 1 of 1
+[2021-04-18 16:51:56,772] {taskinstance.py:1044} INFO - 
+--------------------------------------------------------------------------------
+[2021-04-18 16:51:56,784] {taskinstance.py:1063} INFO - Executing <Task(PythonOperator): load_data_raw> on 2021-04-18T16:47:32.702474+00:00
+[2021-04-18 16:51:56,793] {standard_task_runner.py:52} INFO - Started process 489 to run task
+[2021-04-18 16:51:56,800] {standard_task_runner.py:76} INFO - Running: ['airflow', 'tasks', 'run', 'fetch_kc_crime_data-v0.1', 'load_data_raw', '2021-04-18T16:47:32.702474+00:00', '--job-id', '9', '--pool', 'default_pool', '--raw', '--subdir', 'DAGS_FOLDER/fetch_kc_crime_data-v0.1.py', '--cfg-path', '/tmp/tmpxtoifw_0', '--error-file', '/tmp/tmp80_6y1b1']
+[2021-04-18 16:51:56,804] {standard_task_runner.py:77} INFO - Job 9: Subtask load_data_raw
+[2021-04-18 16:51:56,911] {logging_mixin.py:104} INFO - Running <TaskInstance: fetch_kc_crime_data-v0.1.load_data_raw 2021-04-18T16:47:32.702474+00:00 [running]> on host 9651c4896f9f
+[2021-04-18 16:51:57,008] {taskinstance.py:1257} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=airflow
+AIRFLOW_CTX_DAG_ID=fetch_kc_crime_data-v0.1
+AIRFLOW_CTX_TASK_ID=load_data_raw
+AIRFLOW_CTX_EXECUTION_DATE=2021-04-18T16:47:32.702474+00:00
+AIRFLOW_CTX_DAG_RUN_ID=manual__2021-04-18T16:47:32.702474+00:00
+[2021-04-18 16:51:57,048] {taskinstance.py:1455} ERROR - [Errno 2] No such file or directory: '/opt/airflow/dags/data/2021-04-18.json'
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/models/taskinstance.py", line 1112, in _run_raw_task
+    self._prepare_and_execute_task_with_callbacks(context, task)
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/models/taskinstance.py", line 1285, in _prepare_and_execute_task_with_callbacks
+    result = self._execute_task(context, task_copy)
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/models/taskinstance.py", line 1315, in _execute_task
+    result = task_copy.execute(context=context)
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/operators/python.py", line 117, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.6/site-packages/airflow/operators/python.py", line 128, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/fetch_kc_crime_data-v0.1.py", line 85, in load_data_raw
+    with open(tot_name, 'r') as inputfile:
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/airflow/dags/data/2021-04-18.json'
+[2021-04-18 16:51:57,053] {taskinstance.py:1503} INFO - Marking task as FAILED. dag_id=fetch_kc_crime_data-v0.1, task_id=load_data_raw, execution_date=20210418T164732, start_date=20210418T165156, end_date=20210418T165157
+[2021-04-18 16:51:57,136] {local_task_job.py:146} INFO - Task exited with return code 1
