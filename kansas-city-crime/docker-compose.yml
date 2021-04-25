@@ -63,7 +63,8 @@ x-airflow-common:
     &airflow-common-env
     #AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW_CORE_EXECUTOR: LocalExecutor
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:54322/airflow
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
+    AIRFLOW__CORE__DEFAULT_TIMEZONE: 'America/Chicago'
     #AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
     #AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
@@ -133,8 +134,8 @@ services:
     restart: always
     depends_on: 
       - postgres
-    environment:
-       - POSTGRES_PORT=54322
+    #environment:
+    #   - POSTGRES_PORT=54322
     #  - POSTGRES_PASSWORD=airflow  # ** CHANGE HERE **
 
   #airflow-worker:
@@ -151,7 +152,7 @@ services:
       _AIRFLOW_WWW_USER_CREATE: 'true'
       _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
-      POSTGRES_PORT: 54322
+      #POSTGRES_PORT: 54322
 
   #flower:
   #  <<: *airflow-common

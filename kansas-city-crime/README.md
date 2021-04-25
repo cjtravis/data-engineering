@@ -1,59 +1,74 @@
+
 # Kansas City Crime Dashboard 🚓
-A project leveraging Docker, Apache Airflow, Postgres GIS, and Apache Superset to retrieve, store, and visualize Kansas City crime statistics.
 
-Link to dataset:
-- [Kansas City Crime Data - 2021](https://data.kcmo.org/Crime/KCPD-Crime-Data-2021/w795-ffu6)
+A project utilyzing Docker, Apache Airflow, Postgres GIS, and Apache Superset to retrieve, store, and visualize Kansas City crime statistics.
 
-Kansas City crime data is updated regularly and freely available from the KC Open Data [website](https://data.kcmo.org/).
+## Tech Stack
 
-Orchestration - Apache Airflow
-Data Storage - Postgres on Docker
-Visualization - Apache Superset
-Python and SQL - Data movement and manipulation
+**Orchestration:** Apache Airflow, Python
 
-## Environment Setup
+**Storage:** PostgreSQL (GIS)
+
+**Visualization:** Apache Superset
+
+**Container Service:** Docker
+
+  
+## Demo
+
+
+
+  - [Apache Airflow](http://localhost:8080/home)
+  - [Apache Superset](#)
+## Deployment 
 ### Postgres
-This example relies on the `postgis/postgis` image of Postgres, which includes additional geospatial libraries not included with the standard `postgres/postgres` docker image.  Once downloaded, it should only take a few moments to have a running Postgres instance.
-
+Setting up Postgres is the first step of the deployment.  This will create the `kcmo` database and a `data_user`
+postgres user that we will use to connect to the database.  See [sql/setup.sql](setup.sql)
+for more details on the SQL.
 ```bash
 # Generate a `postgres.conf` file using the Postgres docker image
 docker run -i --rm postgres cat /usr/share/postgresql/postgresql.conf.sample > ./postgres/postgres.conf
 
 # Start Postgres
-docker-compose up 
+docker-compose up -d postgres
 ```
-
-Once running, using a database client (DBeaver, VS Code + sqltools, PGAdmin, etc...), connect using:
-```
-- Host: localhost
-- Port: 5400
-- Username: docker
-- Password: docker
-```
-
+    
 ### Apache Airflow
-Instructions to download and setup Apache Airflow are detailed in my [Airflow Repository](https://www.github.com/cjtravis/airflow).
-
-Additional python modules need to installed in order to satisfy communications with Postgres via Airflow.
-
 ```bash
-# Activate python virtual environment if applicable first
-source path/to/airflow/virtualenv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
+# Initialize airflow database 
+# This will automatically exit upon successful completion
+docker-compose up airfow initdb
 ```
 
-#### Configurations
-HTTP:
 ```bash
-http_data_kcmo_org
+docker-compose up -d
 ```
 
-Postgres:
+After a moment, both the Airflow webserver and scheduler components should be running.  
+Verify by running:
+
 ```bash
-pg_kcmo_opendata
+docker ps
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS                    PORTS                     NAMES
+b4ade13b584b   apache/airflow:2.0.1   "/usr/bin/dumb-init …"   2 minutes ago    Up 2 minutes (healthy)    0.0.0.0:8080->8080/tcp    kansas-city-crime_airflow-webserver_1
+34e79993f13e   apache/airflow:2.0.1   "/usr/bin/dumb-init …"   2 minutes ago    Up 2 minutes              8080/tcp                  kansas-city-crime_airflow-scheduler_1
+c8b2de1f6032   postgis/postgis        "docker-entrypoint.s…"   20 minutes ago   Up 10 minutes (healthy)   0.0.0.0:54322->5432/tcp   kansas-city-crime_postgres_1
 ```
+#### Troubleshooting
+If you encounter this error in the docker output
+```bash
+airflow-init_1       | [2021-04-25 00:57:23,060] {providers_manager.py:299} WARNING - Exception when importing 'airflow.providers.microsoft.azure.hooks.wasb.WasbHook' from 'apache-airflow-providers-microsoft-azure' package: No module named 'azure.storage.blob'
+```
+Attach to the container and install the appropriate module using `pip`
+```bash
+$ docker exec -it kansas-city-crime_airflow-webserver_1 /bin/bash
+```
+```bash
+airflow@b4ade13b584b:/opt/airflow$ pip uninstall --yes azure-storage && pip install -U azure-storage-blob apache-airflow-providers-microsoft-azure==1.1.0
+airflow@b4ade13b584b:/opt/airflow$ exit
+```
+
+After installed, the error should no longer appear in the docker log output.
 
 ### Apache Superset
 ```bash
@@ -64,9 +79,25 @@ docker-compose build
 docker-compose up
 ```
 
+  
+## Setup
+### Airflow Connections
+#### HTTP
+Navigate to Admin > Connections > Add a New Record (blue plus sign icon)
 
-## Environment Teardown
-## Postgres
-```bash
-docker-compose down
-```
+* Conn Id: **http_data_kcmo_org**
+* Conn Type: **HTTP**
+* Host: **https://data.kcmo.org**
+
+#### Postgres
+Navigate to Admin > Connections > Add a New Record (blue plus sign icon)
+
+* Conn Id: **pg_kcmo_opendata**
+* Conn Type: **Postgres**
+* Host: **postgres**
+* Port: **5432**
+* Schema: **kcmo**
+* Login: **data_user**
+* Password: **data_user**
+
+  

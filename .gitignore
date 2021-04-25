@@ -1,1 +1,4 @@
 .vscode/*
+kansas-city-crime/airflow/logs/*
+kansas-city-crime/airflow/__pycache__
+kansas-city-crime/airflow/dags/data

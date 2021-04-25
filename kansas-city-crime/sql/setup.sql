@@ -9,20 +9,14 @@
 --DROP DATABASE IF EXISTS kcmo;
 CREATE DATABASE kcmo;
 
-CREATE USER data_user WITH PASSWORD 'data_user';
-GRANT ALL PRIVILEGES ON DATABASE kcmo TO data_user;
 
--- Apache Superset
-CREATE USER superset_user WITH PASSWORD 'superset_user';
-
-GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO superset_user;
 --create extension postgis;
 
 \c kcmo
 CREATE TABLE crime_2021_raw (
     ID SERIAL NOT NULL PRIMARY KEY,
     INFO JSON NULL,
-    DATE_ADDED TIMESTAMPTZ,
+    DATE_ADDED TIMESTAMPTZ DEFAULT NOW(),
     WINDOW_START TIMESTAMP,
     WINDOW_END TIMESTAMP
 );
@@ -34,3 +28,14 @@ VALUES(
         to_timestamp(to_char(date_trunc('year', now()), 'YYYY-MM-DD"T"HH24:MI:ss.ms'), 'YYYY-MM-DD"T"HH24:MI:ss.ms')::timestamp without time zone,
         to_timestamp(to_char(date_trunc('year', now()), 'YYYY-MM-DD"T"HH24:MI:ss.ms'), 'YYYY-MM-DD"T"HH24:MI:ss.ms')::timestamp without time zone
     );
+
+CREATE USER data_user WITH PASSWORD 'data_user';
+GRANT ALL PRIVILEGES ON DATABASE kcmo TO data_user;
+
+--grant insert on crime_2021_raw to data_user;
+--grant all privileges on crime_2021_raw to data_user;
+--grant usage, select on crime_2021_raw_id_seq to data_user;
+
+-- Apache Superset
+CREATE USER superset_user WITH PASSWORD 'superset_user';
+GRANT SELECT ON ALL TABLES IN SCHEMA PUBLIC TO superset_user;
