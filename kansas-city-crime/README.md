@@ -90,6 +90,7 @@ Navigate to Admin > Connections > Add a New Record (blue plus sign icon)
 * Host: **https://data.kcmo.org**
 
 #### Postgres
+
 Navigate to Admin > Connections > Add a New Record (blue plus sign icon)
 
 * Conn Id: **pg_kcmo_opendata**
@@ -100,4 +101,66 @@ Navigate to Admin > Connections > Add a New Record (blue plus sign icon)
 * Login: **data_user**
 * Password: **data_user**
 
-  
+## Workflow
+
+### Running the Airflow DAG
+
+In a browesr, open the [Apache Airflow web gui](http://localhost:8080/home) and navigate to the [custom DAG](http://localhost:8080/tree?dag_id=fetch_kc_crime_data-v0.1).  The username and password will both be `airflow`.
+
+Click the slider icon to enable the DAG, and the job will automatically kick off.  Click on the `Graph View` tab and monitor progress.  Click on any task to view logs as desired.  After a few seconds, all tasks should complete successfully.  If failures occur, click the task to view the logs.  Be sure to follow the instructions in the `Setup` section.
+
+
+The structure of the pipeline is simple.  A single DAG in Apache Airflow will perform the following 4 steps:
+
+  - Validate the HTTP endpoint where we will be fetching our data is available.
+  - Identify the appropriate date window for which we will request data from the API
+  - Perform the HTTP _GET_ request and store the resulting JSON on the local filesystem.
+  - Insert the resulting _JSON_ payload in its raw (JSON) format into a Postgres table.
+
+![](img/dag.png)
+Once the data has been loaded into Postgres, we will be taking advantage of `JSON` functions in Postgres in order to extract and transfrom the data.  While there are other methods of parsing JSON and loading into a database, the decision to insert raw JSON into the database was deliberate so I could better familiarize myself with the technology.
+
+### Verifying Postgres Results
+
+![](img/dbeaver.png)
+
+#### Profiling All Crimes
+
+Using a common table expression (CTE), expand raw JSON using `json_array_elements_text()` function
+
+```sql
+with crime as (
+    select json_array_elements_text(info)::json as e
+    from crime_2021_raw
+),
+event as (
+    select 
+    e->>'report_no'::varchar as report_no
+    ,to_timestamp(e->>'report_date', 'YYYY-MM-DD"T"HH24:MI:ss.ms')::timestamp without time zone as report_date
+    ,e->>'report_time' as report_time
+    ,to_timestamp(e->>'from_date', 'YYYY-MM-DD"T"HH24:MI:ss.ms')::timestamp without time zone as from_date
+    ,e->>'from_time' as from_time
+    ,e->>'to_time' as to_time
+    ,e->>'offense' as offsense
+    ,e->>'ibrs' as ibrs
+    ,e->>'description' as description
+    ,e->>'beat' as beat
+    ,e->>'address' as address
+    ,e->>'city' as city
+    ,e->>'zip_code' as zip_code
+    ,e->>'rep_dist' as rep_dist
+    ,e->>'area' as area
+    ,e->>'dvflag' as dvflag
+    ,e->>'involvement' as involvement
+    ,e->>'sex' as sex
+    ,e->>'age' as age
+    ,e->>'firearmused_flag' as firearmused_flag
+    ,e->>'location' as location
+    ,e as payload
+    from crime
+)
+select * 
+from event;
+```
+
+More proifling queries are available in [sql/data-profiling-queries.sql](sql/data-profiling-queries.sql)
