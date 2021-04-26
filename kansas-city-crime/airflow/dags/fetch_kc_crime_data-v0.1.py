@@ -26,7 +26,7 @@ def fetch_crime_window(ti):
     select_statement = """
         select 
             max(to_char(window_end, 'YYYY-MM-DD"T"HH24:MI:ss.ms')) 
-          from public.crime_2021_raw;
+          from kcmo.crime_2021_raw;
     """
 
     # establish PG connection, perform select
@@ -89,7 +89,7 @@ def load_data_raw(ti):
         row = (json.dumps(this_json_doc), min_window, max_window,)
 
         insert_statement = """
-            INSERT INTO public.crime_2021_raw(info, window_start, window_end) 
+            INSERT INTO kcmo.crime_2021_raw(info, window_start, window_end) 
             VALUES (%s, to_timestamp(%s, 'YYYY-MM-DD"T"HH24:MI:ss.ms')::timestamp without time zone, 
             to_timestamp(%s, 'YYYY-MM-DD"T"HH24:MI:ss.ms')::timestamp without time zone);
             """

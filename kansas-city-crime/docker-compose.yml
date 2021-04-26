@@ -65,11 +65,13 @@ x-airflow-common:
     AIRFLOW_CORE_EXECUTOR: LocalExecutor
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
     AIRFLOW__CORE__DEFAULT_TIMEZONE: 'America/Chicago'
+    AIRFLOW_CONN_HTTP_DATA_KCMO_ORG: http://https%3A%2F%2Fdata.kcmo.org
+    AIRFLOW_CONN_PG_KCMO_OPENDATA: postgres://etl_user:etl_user@postgres:5432/pipelines
     #AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
     #AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
   volumes:
     - ./airflow/dags:/opt/airflow/dags
     - ./airflow/logs:/opt/airflow/logs
@@ -84,13 +86,16 @@ x-airflow-common:
 services:
   postgres:
     #image: postgres:13
-    image: postgis/postgis
+    image: postgis/postgis:latest
     ports:
       - "54322:5432"
     environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: airflow
+      POSTGRES_USER: master
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pipelines
+      #POSTGRES_USER: airflow
+      #POSTGRES_PASSWORD: airflow
+      #POSTGRES_DB: airflow
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
       - ./sql/setup.sql:/docker-entrypoint-initdb.d/schema.sql
@@ -115,6 +120,10 @@ services:
     <<: *airflow-common
     command: webserver
     #environment:
+    #  <<: *airflow-common-env
+    #  AIRFLOW_CONN_HTTP_DATA_KCMO_ORG: "http-data-kcmo_org=http://https%3A%2F%2Fdata.kcmo.org"
+    #  AIRFLOW_CONN_PG_KCMO_OPENDATA: "pg-kcmo-opendata=postgres://data_user:data_user@postgres:5432/pipelines"
+    #environment:
     #  - POSTGRES_PASSWORD=airflow  # ** CHANGE HERE **
     ports:
       - 8080:8080
@@ -127,6 +136,12 @@ services:
     depends_on: 
       - postgres
       - airflow-scheduler
+      - airflow-init
+    #environment:
+    #  - AIRFLOW_CONN_HTTP_DATA_KCMO_ORG=http_data_kcmo_org=http://https%3A%2F%2Fdata.kcmo.org
+    #  - AIRFLOW_CONN_PG_KCMO_OPENDATA=pg_kcmo_opendata=postgres://data_user:data_user@postgres:5432/pipelines
+    #  - AIRFLOW_CONN_HTTP_DATA_KCMO_ORG: "http_data_kcmo_org=http://https%3A%2F%2Fdata.kcmo.org"
+    #  - AIRFLOW_CONN_PG_KCMO_OPENDATA: "pg_kcmo_opendata=postgres://data_user:data_user@postgres:5432/pipelines"
 
   airflow-scheduler:
     <<: *airflow-common
@@ -134,6 +149,7 @@ services:
     restart: always
     depends_on: 
       - postgres
+      - airflow-init
     #environment:
     #   - POSTGRES_PORT=54322
     #  - POSTGRES_PASSWORD=airflow  # ** CHANGE HERE **
@@ -146,6 +162,8 @@ services:
   airflow-init:
     <<: *airflow-common
     command: version
+    #depends-on:
+    #  - postgres
     environment:
       <<: *airflow-common-env
       _AIRFLOW_DB_UPGRADE: 'true'

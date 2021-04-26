@@ -64,6 +64,8 @@ event as (
     ,e->>'age' as age
     ,e->>'firearmused_flag' as firearmused_flag
     ,e->>'location' as location
+    ,ST_X(e ->> 'location') AS lon
+	,ST_Y(e ->> 'location') AS lat
     ,e as payload
     from crime
 )

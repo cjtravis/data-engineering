@@ -1,8 +1,10 @@
 
 # Kansas City Crime Dashboard 🚓
 
-A project utilyzing Docker, Apache Airflow, Postgres GIS, and Apache Superset to retrieve, store, and visualize Kansas City crime statistics.
+This project aims to make use of completely free and open source technologies to perform the orchestration, ingestion, storage, and execution found in a modern data pipeline.  The data is also freely available, courtesy of [Open Data KC](https://data.kcmo.org/). 
 
+
+![](img/kansas-city-crime-dashboard.jpg)
 ## Tech Stack
 
 **Orchestration:** Apache Airflow, Python
@@ -14,37 +16,13 @@ A project utilyzing Docker, Apache Airflow, Postgres GIS, and Apache Superset to
 **Container Service:** Docker
 
   
-## Demo
-
-
-
-  - [Apache Airflow](http://localhost:8080/home)
-  - [Apache Superset](#)
-## Deployment 
-### Postgres
-Setting up Postgres is the first step of the deployment.  This will create the `kcmo` database and a `data_user`
-postgres user that we will use to connect to the database.  See [sql/setup.sql](setup.sql)
-for more details on the SQL.
+## Deployment   
+### Postgres and Apache Airflow
 ```bash
-# Generate a `postgres.conf` file using the Postgres docker image
-docker run -i --rm postgres cat /usr/share/postgresql/postgresql.conf.sample > ./postgres/postgres.conf
-
-# Start Postgres
-docker-compose up -d postgres
-```
-    
-### Apache Airflow
-```bash
-# Initialize airflow database 
-# This will automatically exit upon successful completion
-docker-compose up airfow initdb
+docker-compose up 
 ```
 
-```bash
-docker-compose up -d
-```
-
-After a moment, both the Airflow webserver and scheduler components should be running.  
+After a couple of moments, both the webserver and scheduler components of Airflow should be running.  
 Verify by running:
 
 ```bash
@@ -71,44 +49,40 @@ airflow@b4ade13b584b:/opt/airflow$ exit
 After installed, the error should no longer appear in the docker log output.
 
 ### Apache Superset
+**Clone the repository**
 ```bash
 git clone https://github.com/apache/superset.git
+```
+
+**MapBox API**
+Add the following to the `docker/.env` file:
+```bash
+MAPBOX_API_KEY=pk.eyJ1IjoiY2p0cm...
+```
+
+**Patch the frontend**
+```bash
 cd superset-frontend
 npm update
+```
+
+**Start the containers**
+```bash
 docker-compose build
 docker-compose up
 ```
 
+Note: Apache Superset may take some time before everything comes online.  Grab some coffee or tea while you wait.
   
-## Setup
-### Airflow Connections
-#### HTTP
-Navigate to Admin > Connections > Add a New Record (blue plus sign icon)
-
-* Conn Id: **http_data_kcmo_org**
-* Conn Type: **HTTP**
-* Host: **https://data.kcmo.org**
-
-#### Postgres
-
-Navigate to Admin > Connections > Add a New Record (blue plus sign icon)
-
-* Conn Id: **pg_kcmo_opendata**
-* Conn Type: **Postgres**
-* Host: **postgres**
-* Port: **5432**
-* Schema: **kcmo**
-* Login: **data_user**
-* Password: **data_user**
-
 ## Workflow
 
 ### Running the Airflow DAG
 
-In a browesr, open the [Apache Airflow web gui](http://localhost:8080/home) and navigate to the [custom DAG](http://localhost:8080/tree?dag_id=fetch_kc_crime_data-v0.1).  The username and password will both be `airflow`.
+In a web browser, open the [Apache Airflow web console](http://localhost:8080/home) and navigate to the [custom DAG](http://localhost:8080/tree?dag_id=fetch_kc_crime_data-v0.1).  The username and password will both be `airflow`.
 
-Click the slider icon to enable the DAG, and the job will automatically kick off.  Click on the `Graph View` tab and monitor progress.  Click on any task to view logs as desired.  After a few seconds, all tasks should complete successfully.  If failures occur, click the task to view the logs.  Be sure to follow the instructions in the `Setup` section.
+By design, the DAG `fetch_kc_crime_data-v0.1` will execute automatically.  Assuming a succesful execution of the DAG, you should observe the following:
 
+![](img/dag.png)
 
 The structure of the pipeline is simple.  A single DAG in Apache Airflow will perform the following 4 steps:
 
@@ -117,14 +91,21 @@ The structure of the pipeline is simple.  A single DAG in Apache Airflow will pe
   - Perform the HTTP _GET_ request and store the resulting JSON on the local filesystem.
   - Insert the resulting _JSON_ payload in its raw (JSON) format into a Postgres table.
 
-![](img/dag.png)
 Once the data has been loaded into Postgres, we will be taking advantage of `JSON` functions in Postgres in order to extract and transfrom the data.  While there are other methods of parsing JSON and loading into a database, the decision to insert raw JSON into the database was deliberate so I could better familiarize myself with the technology.
 
-### Verifying Postgres Results
+### Querying Postgres
 
 ![](img/dbeaver.png)
 
 #### Profiling All Crimes
+Postgres may be accessed using a database client tool such as PGAdmin or DBeaver.  
+
+**Connection Info**
+
+|Host|User|Pass|Port|Database
+|----|---|---|---|---|
+|localhost|etl_user|etl_user|5432|pipelines
+
 
 Using a common table expression (CTE), expand raw JSON using `json_array_elements_text()` function
 
@@ -163,4 +144,67 @@ select *
 from event;
 ```
 
-More proifling queries are available in [sql/data-profiling-queries.sql](sql/data-profiling-queries.sql)
+More profiling queries are available in [sql/data-profiling-queries.sql](sql/data-profiling-queries.sql)
+
+### Dashboarding with Apache Superset
+Navigate to [Apache Superset](http://localhost:8088/superset/welcome/) in your browser. 
+
+> Note: Use `admin/admin` for username and password.
+
+#### Create connection to Postgres database
+
+Once in Superset, navigate to Data > Databases.
+
+![](img/superset-create-database.png)
+
+**Database Name**: Crime
+
+**SQL Alchemy URI**: postgres://superset_user:superset_user@host.docker.internal:54322/pipelines
+
+Click `Save`.
+
+#### Import Dashboard
+The dashboard export file is located in [superset/kansas-city-crime-dashboard-2021.json](superset/kansas-city-crime-dashboard-2021.json).
+
+In Superset, navigate to _Settings_ > _Import Dashboards_
+![](img/superset-import-dashboard.png)
+
+On the _Import Dashboard(s)_ dialogue, click `File` and navigate to [superset/kansas-city-crime-dashboard-2021.json](superset/kansas-city-crime-dashboard-2021.json).
+
+On the `Database` dropdown, select `Crime`.
+
+![](img/superset-select-file-database.png)
+
+Click `Upload`.
+
+The dashboard should now be available and ready for use under the _Dashboards_ menu.
+
+## Teardown
+### Superset
+**Stopping Superset**
+From the superset directory:
+```bash
+docker-compose stop
+```
+**Teardown Superset**
+From the superset directory:
+```bash
+docker-compose down
+```
+### Airflow/Postgres
+**Stopping Airflow and Postgres**
+From the project repository:
+```bash
+docker-compose stop
+```
+
+**Teardown Airflow and Postgres**
+From the project repository:
+```bash
+docker-compose down
+# removes postgres data directory 
+rm -rf ./postgres/data # warning, destructive operation
+```
+## References
+
+- https://airflow.apache.org/docs/apache-airflow/2.0.1/docker-compose.yaml

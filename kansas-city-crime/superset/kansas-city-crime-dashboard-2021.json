@@ -1,0 +1,929 @@
+{
+    "dashboards": [
+        {
+            "__Dashboard__": {
+                "css": "",
+                "dashboard_title": "Kansas City Crime Dashboard - 2021",
+                "description": null,
+                "json_metadata": "{\"timed_refresh_immune_slices\": [], \"expanded_slices\": {}, \"refresh_frequency\": 0, \"default_filters\": \"{\\\"146\\\": {\\\"__time_range\\\": \\\"2021-01-01T00:00:00 : 2021-12-31T23:59:59\\\"}}\", \"color_scheme\": \"supersetColors\", \"label_colors\": {}, \"filter_scopes\": {\"146\": {\"offsense\": {\"scope\": [\"ROOT_ID\"], \"immune\": []}, \"area\": {\"scope\": [\"ROOT_ID\"], \"immune\": []}, \"zip_code\": {\"scope\": [\"ROOT_ID\"], \"immune\": []}, \"__time_range\": {\"scope\": [\"ROOT_ID\"], \"immune\": []}}}, \"remote_id\": 12}",
+                "position_json": "{\"CHART-2TCaTb2gtU\":{\"children\":[],\"id\":\"CHART-2TCaTb2gtU\",\"meta\":{\"chartId\":143,\"height\":44,\"sliceName\":\"Crime Map\",\"uuid\":\"4c6bb3f7-6cdb-4fcc-ba4d-64ce17a61d15\",\"width\":5},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-i4Ss3qHxB\"],\"type\":\"CHART\"},\"CHART-3fUKJqjtsY\":{\"children\":[],\"id\":\"CHART-3fUKJqjtsY\",\"meta\":{\"chartId\":149,\"height\":50,\"sliceName\":\"Top Crimes by Patrol\",\"uuid\":\"883dca7a-25f1-4b0f-a45e-b322cf5308ba\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-DrMnrL7BR\"],\"type\":\"CHART\"},\"CHART-6fmuRjdMZj\":{\"children\":[],\"id\":\"CHART-6fmuRjdMZj\",\"meta\":{\"chartId\":146,\"height\":44,\"sliceName\":\"Crime Dashboard Filters\",\"uuid\":\"f332c2eb-3d0b-46f7-bd7c-55e70eed6af6\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-i4Ss3qHxB\"],\"type\":\"CHART\"},\"CHART-AfLy5SBgNw\":{\"children\":[],\"id\":\"CHART-AfLy5SBgNw\",\"meta\":{\"chartId\":147,\"height\":48,\"sliceName\":\"Crime Trend - WoW\",\"uuid\":\"7c84e845-2ecb-4cfb-a670-8f220729011f\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-w1plKxgXf\"],\"type\":\"CHART\"},\"CHART-OvNNqO_sB9\":{\"children\":[],\"id\":\"CHART-OvNNqO_sB9\",\"meta\":{\"chartId\":150,\"height\":50,\"sliceName\":\"Crime Trendlines\",\"uuid\":\"f1a53fa2-6b36-4b19-96de-af8b1775b86c\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-DrMnrL7BR\"],\"type\":\"CHART\"},\"CHART-ZYrkBC4sC3\":{\"children\":[],\"id\":\"CHART-ZYrkBC4sC3\",\"meta\":{\"chartId\":144,\"height\":44,\"sliceName\":\"Crimes by Patrol\",\"uuid\":\"b9c8fa62-10a0-482f-a64e-f9bc85881100\",\"width\":3},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-i4Ss3qHxB\"],\"type\":\"CHART\"},\"CHART-auZv0jKiAp\":{\"children\":[],\"id\":\"CHART-auZv0jKiAp\",\"meta\":{\"chartId\":148,\"height\":45,\"sliceName\":\"Crime Event Table\",\"uuid\":\"55bb2ea2-f4e3-4fd0-a680-11205712e319\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-1YE8UBAyl\"],\"type\":\"CHART\"},\"CHART-iueNxu9drc\":{\"children\":[],\"id\":\"CHART-iueNxu9drc\",\"meta\":{\"chartId\":145,\"height\":48,\"sliceName\":\"Crime Calendar Heatmap\",\"uuid\":\"64b353ae-ef67-4f54-9d02-162a9a7c6acf\",\"width\":12},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-io-kAUU0h\"],\"type\":\"CHART\"},\"CHART-lrxesasZ9p\":{\"children\":[],\"id\":\"CHART-lrxesasZ9p\",\"meta\":{\"chartId\":152,\"height\":50,\"sliceName\":\"Top 10 Crimes by Offense by Week\",\"uuid\":\"b8117e4d-9c38-4a8e-b1f7-21520b96dbdd\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-DrMnrL7BR\"],\"type\":\"CHART\"},\"CHART-uePLFppCfH\":{\"children\":[],\"id\":\"CHART-uePLFppCfH\",\"meta\":{\"chartId\":153,\"height\":50,\"sliceName\":\"Crime Screen Grid\",\"uuid\":\"976daffb-2950-4a3d-9eb2-92c5b2332cc2\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-w1plKxgXf\"],\"type\":\"CHART\"},\"CHART-wEGxYXfuhI\":{\"children\":[],\"id\":\"CHART-wEGxYXfuhI\",\"meta\":{\"chartId\":151,\"height\":49,\"sliceName\":\"Crime by Patrol - Area\",\"uuid\":\"39b95bab-6fdc-4cfa-99d2-8cd0c087a0a5\",\"width\":4},\"parents\":[\"ROOT_ID\",\"GRID_ID\",\"ROW-w1plKxgXf\"],\"type\":\"CHART\"},\"DASHBOARD_VERSION_KEY\":\"v2\",\"GRID_ID\":{\"children\":[\"ROW-i4Ss3qHxB\",\"ROW-w1plKxgXf\",\"ROW-io-kAUU0h\",\"ROW-DrMnrL7BR\",\"ROW-1YE8UBAyl\"],\"id\":\"GRID_ID\",\"parents\":[\"ROOT_ID\"],\"type\":\"GRID\"},\"HEADER_ID\":{\"id\":\"HEADER_ID\",\"meta\":{\"text\":\"Kansas City Crime Dashboard - 2021\"},\"type\":\"HEADER\"},\"ROOT_ID\":{\"children\":[\"GRID_ID\"],\"id\":\"ROOT_ID\",\"type\":\"ROOT\"},\"ROW-1YE8UBAyl\":{\"children\":[\"CHART-auZv0jKiAp\"],\"id\":\"ROW-1YE8UBAyl\",\"meta\":{\"0\":\"ROOT_ID\",\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-DrMnrL7BR\":{\"children\":[\"CHART-OvNNqO_sB9\",\"CHART-lrxesasZ9p\",\"CHART-3fUKJqjtsY\"],\"id\":\"ROW-DrMnrL7BR\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-i4Ss3qHxB\":{\"children\":[\"CHART-6fmuRjdMZj\",\"CHART-2TCaTb2gtU\",\"CHART-ZYrkBC4sC3\"],\"id\":\"ROW-i4Ss3qHxB\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-io-kAUU0h\":{\"children\":[\"CHART-iueNxu9drc\"],\"id\":\"ROW-io-kAUU0h\",\"meta\":{\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"},\"ROW-w1plKxgXf\":{\"children\":[\"CHART-wEGxYXfuhI\",\"CHART-uePLFppCfH\",\"CHART-AfLy5SBgNw\"],\"id\":\"ROW-w1plKxgXf\",\"meta\":{\"0\":\"ROOT_ID\",\"background\":\"BACKGROUND_TRANSPARENT\"},\"parents\":[\"ROOT_ID\",\"GRID_ID\"],\"type\":\"ROW\"}}",
+                "slices": [
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 143,
+                            "params": "{\"adhoc_filters\": [{\"clause\": \"WHERE\", \"comparator\": \"KC21010594\", \"expressionType\": \"SIMPLE\", \"filterOptionName\": \"filter_sht3zmqid08_svh12euaxnq\", \"isExtra\": false, \"isNew\": false, \"operator\": \"!=\", \"sqlExpression\": null, \"subject\": \"report_no\"}], \"autozoom\": true, \"color_picker\": {\"a\": 1, \"b\": 85, \"g\": 67, \"r\": 224}, \"color_scheme\": \"supersetColors\", \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"filter_nulls\": true, \"granularity\": null, \"granularity_sqla\": \"report_date\", \"js_columns\": [\"offsense\", \"from_date\"], \"label_colors\": {}, \"legend_format\": [\"SMART_NUMBER\", \"Adaptative formating\"], \"legend_position\": \"tr\", \"mapbox_style\": \"mapbox://styles/mapbox/light-v9\", \"max_radius\": 250, \"min_radius\": 3, \"multiplier\": 1, \"point_radius_fixed\": {\"type\": \"fix\", \"value\": \"2000\"}, \"point_unit\": \"square_m\", \"row_limit\": 10000, \"slice_id\": 143, \"spatial\": {\"latCol\": \"lat\", \"lonCol\": \"lon\", \"type\": \"latlong\"}, \"time_grain_sqla\": null, \"time_range\": \"2021-01-01T00:00:00 : 2021-12-31T23:59:59\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viewport\": {\"altitude\": 1.5, \"bearing\": 0, \"height\": 356, \"latitude\": 39.11508470996587, \"longitude\": -94.39585167383574, \"maxPitch\": 60, \"maxZoom\": 20, \"minPitch\": 0, \"minZoom\": 0, \"pitch\": 0, \"position\": [0, 0, 0], \"width\": 928, \"zoom\": 9.117270415409118}, \"viz_type\": \"deck_scatter\", \"remote_id\": 143, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime Map",
+                            "viz_type": "deck_scatter"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 144,
+                            "params": "{\"adhoc_filters\": [], \"all_columns\": [], \"color_pn\": true, \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"granularity_sqla\": \"from_date\", \"groupby\": [\"area\"], \"metrics\": [\"count\"], \"order_by_cols\": [], \"order_desc\": true, \"percent_metrics\": [], \"query_mode\": \"aggregate\", \"row_limit\": 10000, \"server_page_length\": 10, \"show_cell_bars\": true, \"show_totals\": true, \"table_timestamp_format\": \"smart_date\", \"time_grain_sqla\": \"P1D\", \"time_range\": \"Last quarter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"table\", \"remote_id\": 144, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crimes by Patrol",
+                            "viz_type": "table"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 145,
+                            "params": "{\"adhoc_filters\": [], \"cell_padding\": 3, \"cell_size\": 29, \"datasource\": \"30__table\", \"domain_granularity\": \"month\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"granularity_sqla\": \"from_date\", \"linear_color_scheme\": \"superset_seq_1\", \"metrics\": [\"count\"], \"show_legend\": true, \"show_metric_name\": false, \"show_values\": true, \"slice_id\": 145, \"steps\": 10, \"subdomain_granularity\": \"day\", \"time_range\": \"2021-01-01T00:00:00 : 2021-12-31T23:59:59\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"cal_heatmap\", \"x_axis_time_format\": \"%m/%d/%Y\", \"y_axis_format\": \"SMART_NUMBER\", \"remote_id\": 145, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime Calendar Heatmap",
+                            "viz_type": "cal_heatmap"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 146,
+                            "params": "{\"adhoc_filters\": [], \"datasource\": \"30__table\", \"date_filter\": true, \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"filter_configs\": [{\"asc\": true, \"clearable\": true, \"column\": \"offsense\", \"key\": \"i68AnF5r8\", \"label\": \"Offense\", \"metric\": null, \"multiple\": true, \"searchAllOptions\": false}, {\"asc\": true, \"clearable\": true, \"column\": \"area\", \"key\": \"1rTwgBWmT\", \"label\": \"Patrol\", \"multiple\": true, \"searchAllOptions\": false}, {\"asc\": true, \"clearable\": true, \"column\": \"zip_code\", \"key\": \"AY6yjYh_S\", \"label\": \"Postal Code\", \"multiple\": true, \"searchAllOptions\": false}], \"granularity_sqla\": \"report_date\", \"slice_id\": 146, \"time_grain_sqla\": null, \"time_range\": \"2021-01-01T00:00:00 : 2021-12-31T23:59:59\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"filter_box\", \"remote_id\": 146, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime Dashboard Filters",
+                            "viz_type": "filter_box"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 147,
+                            "params": "{\"adhoc_filters\": [], \"color_picker\": {\"a\": 1, \"b\": 135, \"g\": 122, \"r\": 0}, \"compare_lag\": 1, \"compare_suffix\": \"In most current week\", \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"granularity_sqla\": \"from_date\", \"header_font_size\": 0.4, \"metric\": \"count\", \"rolling_type\": \"None\", \"show_trend_line\": true, \"start_y_axis_at_zero\": true, \"subheader_font_size\": 0.15, \"time_grain_sqla\": \"P1W\", \"time_range\": \"2021-01-01T00:00:00 : 2021-12-31T23:59:59\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"big_number\", \"y_axis_format\": \"SMART_NUMBER\", \"remote_id\": 147, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime Trend - WoW",
+                            "viz_type": "big_number"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 148,
+                            "params": "{\"adhoc_filters\": [], \"all_columns\": [\"report_no\", \"report_date\", \"report_time\", \"from_date\", \"from_time\", \"to_time\", \"offsense\", \"description\", \"beat\", \"address\", \"city\", \"zip_code\", \"area\", \"involvement\", \"sex\", \"age\", \"firearmused_flag\", \"lat\", \"lon\"], \"color_pn\": true, \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"granularity_sqla\": \"from_date\", \"groupby\": [], \"metrics\": [\"count\"], \"order_by_cols\": [\"[\\\"from_date\\\", true]\", \"[\\\"from_time\\\", true]\"], \"order_desc\": true, \"percent_metrics\": [], \"query_mode\": \"raw\", \"row_limit\": 10000, \"server_page_length\": 50, \"server_pagination\": true, \"show_cell_bars\": true, \"show_totals\": true, \"slice_id\": 148, \"table_timestamp_format\": \"smart_date\", \"time_grain_sqla\": \"P1D\", \"time_range\": \"2021-01-01T00:00:00 : 2021-12-31T23:59:59\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"table\", \"remote_id\": 148, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime Event Table",
+                            "viz_type": "table"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_rank_by_patrol_vw",
+                            "datasource_type": "table",
+                            "id": 149,
+                            "params": "{\"adhoc_filters\": [{\"clause\": \"WHERE\", \"comparator\": \"1\", \"expressionType\": \"SIMPLE\", \"filterOptionName\": \"filter_bviyeoxd5v8_8gaea6ufhnn\", \"isExtra\": false, \"isNew\": false, \"operator\": \"==\", \"sqlExpression\": null, \"subject\": \"crime_rank\"}], \"all_columns\": [], \"color_pn\": true, \"datasource\": \"29__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"groupby\": [\"patrol\", \"description\"], \"metrics\": [{\"aggregate\": \"MAX\", \"column\": {\"column_name\": \"total_occurrences\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 779, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"BIGINT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"MAX(total_occurrences)\", \"optionName\": \"metric_w4wp4a2v5nm_9g4wh1aznc\", \"sqlExpression\": null}], \"order_by_cols\": [], \"order_desc\": true, \"percent_metrics\": [], \"query_mode\": \"aggregate\", \"row_limit\": 10000, \"server_page_length\": 10, \"show_cell_bars\": true, \"show_totals\": true, \"table_timestamp_format\": \"smart_date\", \"time_grain_sqla\": \"P1D\", \"time_range\": \"Last quarter\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"table\", \"remote_id\": 149, \"datasource_name\": \"crime_rank_by_patrol_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Top Crimes by Patrol",
+                            "viz_type": "table"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 150,
+                            "params": "{\"adhoc_filters\": [], \"column_collection\": [{\"bounds\": [null, null], \"colType\": \"spark\", \"comparisonType\": \"\", \"d3format\": \"\", \"dateFormat\": \"\", \"height\": \"\", \"key\": \"qSarqKmPG\", \"label\": \"Time series columns\", \"showYAxis\": false, \"timeLag\": 0, \"timeRatio\": \"\", \"tooltip\": \"\", \"width\": \"\", \"yAxisBounds\": [null, null]}], \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"granularity_sqla\": \"report_date\", \"groupby\": [], \"limit\": 100, \"metrics\": [{\"aggregate\": \"COUNT_DISTINCT\", \"column\": {\"column_name\": \"offsense\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 787, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"TEXT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": true, \"isNew\": false, \"label\": \"Distinct Offenses\", \"optionName\": \"metric_48qccmqsd5q_2f7lqr16y3\", \"sqlExpression\": null}, {\"aggregate\": \"COUNT\", \"column\": {\"column_name\": \"offsense\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 787, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"TEXT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": true, \"isNew\": false, \"label\": \"Number of Offenses\", \"optionName\": \"metric_k5rmsbnofxc_j6x39gqz0yc\", \"sqlExpression\": null}, {\"aggregate\": \"COUNT_DISTINCT\", \"column\": {\"column_name\": \"beat\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 790, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"TEXT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": true, \"isNew\": false, \"label\": \"Distinct Patrols\", \"optionName\": \"metric_nr6zwy9ref_zn8borp0rs\", \"sqlExpression\": null}], \"row_limit\": 10000, \"time_grain_sqla\": \"P1D\", \"time_range\": \"Last year\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"time_table\", \"remote_id\": 150, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime Trendlines",
+                            "viz_type": "time_table"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 151,
+                            "params": "{\"adhoc_filters\": [], \"annotation_layers\": [], \"bottom_margin\": \"auto\", \"color_scheme\": \"supersetColors\", \"comparison_type\": \"values\", \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"granularity_sqla\": \"report_date\", \"groupby\": [\"area\"], \"label_colors\": {}, \"limit\": 100, \"line_interpolation\": \"linear\", \"metrics\": [\"count\"], \"order_desc\": false, \"rich_tooltip\": true, \"rolling_type\": \"None\", \"row_limit\": 10000, \"show_brush\": \"auto\", \"stacked_style\": \"stack\", \"time_grain_sqla\": \"P1W\", \"time_range\": \"Last year\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"area\", \"x_axis_format\": \"smart_date\", \"x_ticks_layout\": \"auto\", \"y_axis_bounds\": [null, null], \"y_axis_format\": \"SMART_NUMBER\", \"remote_id\": 151, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime by Patrol - Area",
+                            "viz_type": "area"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 152,
+                            "params": "{\"adhoc_filters\": [], \"annotation_layers\": [], \"bottom_margin\": \"auto\", \"color_scheme\": \"supersetColors\", \"comparison_type\": \"values\", \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"granularity_sqla\": \"from_date\", \"groupby\": [\"offsense\"], \"label_colors\": {}, \"left_margin\": \"auto\", \"limit\": 10, \"line_interpolation\": \"linear\", \"metrics\": [\"count\"], \"order_desc\": true, \"rich_tooltip\": true, \"rolling_type\": \"None\", \"row_limit\": 50000, \"show_brush\": \"auto\", \"time_grain_sqla\": \"P1W\", \"time_range\": \"2021-01-01T00:00:00 : 2021-12-31T00:00:00\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viz_type\": \"line\", \"x_axis_format\": \"smart_date\", \"x_ticks_layout\": \"auto\", \"y_axis_bounds\": [null, null], \"y_axis_format\": \"SMART_NUMBER\", \"remote_id\": 152, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Top 10 Crimes by Offense by Week",
+                            "viz_type": "line"
+                        }
+                    },
+                    {
+                        "__Slice__": {
+                            "cache_timeout": null,
+                            "datasource_name": "kcmo.crime_2021_vw",
+                            "datasource_type": "table",
+                            "id": 153,
+                            "params": "{\"adhoc_filters\": [{\"clause\": \"WHERE\", \"comparator\": \"KC21010594\", \"expressionType\": \"SIMPLE\", \"filterOptionName\": \"filter_tcqzx8ikr1_62i92mx2ivh\", \"isExtra\": false, \"isNew\": false, \"operator\": \"!=\", \"sqlExpression\": null, \"subject\": \"report_no\"}], \"autozoom\": true, \"color_picker\": {\"a\": 0.95, \"b\": 114, \"g\": 240, \"r\": 117}, \"datasource\": \"30__table\", \"extra_form_data\": {\"append_form_data\": {}, \"custom_form_data\": {}, \"override_form_data\": {}}, \"filter_nulls\": true, \"granularity_sqla\": \"report_date\", \"grid_size\": 20, \"js_columns\": [], \"mapbox_style\": \"mapbox://styles/mapbox/dark-v9\", \"row_limit\": 10000, \"size\": {\"aggregate\": \"COUNT\", \"column\": {\"column_name\": \"zip_code\", \"description\": null, \"expression\": null, \"filterable\": true, \"groupby\": true, \"id\": 793, \"is_dttm\": false, \"python_date_format\": null, \"type\": \"TEXT\", \"verbose_name\": null}, \"expressionType\": \"SIMPLE\", \"hasCustomLabel\": false, \"isNew\": false, \"label\": \"COUNT(zip_code)\", \"optionName\": \"metric_7ho3jl9az3n_cym93n3w9fh\", \"sqlExpression\": null}, \"slice_id\": 153, \"spatial\": {\"latCol\": \"lat\", \"lonCol\": \"lon\", \"type\": \"latlong\"}, \"time_range\": \"2021-01-01T00:00:00 : 2021-12-31T23:59:59\", \"time_range_endpoints\": [\"inclusive\", \"exclusive\"], \"url_params\": {}, \"viewport\": {\"altitude\": 1.5, \"bearing\": 0, \"height\": 803, \"latitude\": 39.797463859794725, \"longitude\": -94.37407212323947, \"maxPitch\": 60, \"maxZoom\": 20, \"minPitch\": 0, \"minZoom\": 0, \"pitch\": 0, \"position\": [0, 0, 0], \"transitionDuration\": 0, \"width\": 1488, \"zoom\": 5.963499201410201}, \"viz_type\": \"deck_screengrid\", \"remote_id\": 153, \"datasource_name\": \"crime_2021_vw\", \"schema\": \"kcmo\", \"database_name\": \"Crime\"}",
+                            "slice_name": "Crime Screen Grid",
+                            "viz_type": "deck_screengrid"
+                        }
+                    }
+                ],
+                "slug": null
+            }
+        }
+    ],
+    "datasources": [
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "column_name": "patrol",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 777,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 29,
+                            "type": "TEXT",
+                            "uuid": "86fe0600-d6af-46e0-a072-4bc8fa1c0bdc",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "column_name": "description",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 778,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 29,
+                            "type": "TEXT",
+                            "uuid": "356a8655-b58a-466d-8a72-1f5abcc88a9f",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "column_name": "total_occurrences",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 779,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 29,
+                            "type": "BIGINT",
+                            "uuid": "bcb08d0b-4d1a-41b8-bbc4-ac2d9563e969",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "column_name": "crime_rank",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 780,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 29,
+                            "type": "BIGINT",
+                            "uuid": "d810c7ff-c67c-4b3e-946f-32491f41bfac",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 2,
+                "default_endpoint": null,
+                "description": null,
+                "extra": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "main_dttm_col": null,
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:26"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "COUNT(*)",
+                            "extra": null,
+                            "id": 37,
+                            "metric_name": "count",
+                            "metric_type": "count",
+                            "table_id": 29,
+                            "uuid": "03823047-442d-4049-ac0e-c147fe9fc794",
+                            "verbose_name": "COUNT(*)",
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"remote_id\": 29, \"database_name\": \"Crime\"}",
+                "schema": "kcmo",
+                "sql": null,
+                "table_name": "crime_rank_by_patrol_vw",
+                "template_params": null
+            }
+        },
+        {
+            "__SqlaTable__": {
+                "cache_timeout": null,
+                "columns": [
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "report_no",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 781,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "fb921d8d-81fe-4f3b-bf7a-6b5ee3b8a25d",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "report_date",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 782,
+                            "is_active": true,
+                            "is_dttm": true,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TIMESTAMP WITHOUT TIME ZONE",
+                            "uuid": "d0bf9868-80ee-4b16-a0ac-1902a973e33a",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "report_time",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 783,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "53637fcb-1b05-4b85-9a62-d456494f4475",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "from_date",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 784,
+                            "is_active": true,
+                            "is_dttm": true,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TIMESTAMP WITHOUT TIME ZONE",
+                            "uuid": "1e7aa57f-819f-4df0-9527-233232163a86",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "from_time",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 785,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "80c175c6-b89b-478f-abf7-6553f5bc54a5",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "to_time",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 786,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "6a82b8ee-d445-44ec-b39d-7f0b640186e3",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "offsense",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 787,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "eacbd21c-257e-4a8d-a11d-26e1a271f084",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "ibrs",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 788,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "cb52e36e-56eb-4617-8e44-0a3daf8cea2b",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "description",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 789,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "6636b151-3226-4273-811e-d43ce0a0347d",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "beat",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 790,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "a1715b04-2d13-4f97-8fb1-3b4ccfce406a",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "address",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 791,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "9b7447d0-d4ec-4d66-a3e8-c788dd9fe091",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "city",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 792,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "4d987a42-a8ce-4f68-b9ab-4f7f01376fc7",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "zip_code",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 793,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "964be77b-b2a2-4dce-91cd-2200de09a9de",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "rep_dist",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 794,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "daf89573-3dbb-45cc-a6d0-1af15b01cf36",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "area",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 795,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "fcaf919c-4435-4cf1-984d-5f3e6887177b",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "dvflag",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 796,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "84aeb278-5051-41f1-8a30-6e5dd6dbd045",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "involvement",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 797,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "4b9edc85-e756-4c46-a52d-219c1d842322",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "sex",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 798,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "02a37ad2-e9e1-4b66-927f-cbdf713bf074",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "age",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 799,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "3bab8a34-a40c-4d6f-87f0-f1e45717fd90",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "firearmused_flag",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 800,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "9910512f-84b7-49e5-83a8-988d8c654472",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "location",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 801,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "TEXT",
+                            "uuid": "06955258-90e1-4d6c-8734-89fae059a0b2",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "lon",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 802,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "DOUBLE PRECISION",
+                            "uuid": "e2d5c6d1-04f9-4f90-8ae9-b3e5388d83bf",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "lat",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 803,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "DOUBLE PRECISION",
+                            "uuid": "5b909c31-5436-4888-8e93-2c8b6316521b",
+                            "verbose_name": null
+                        }
+                    },
+                    {
+                        "__TableColumn__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "column_name": "payload",
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "description": null,
+                            "expression": null,
+                            "filterable": true,
+                            "groupby": true,
+                            "id": 804,
+                            "is_active": true,
+                            "is_dttm": false,
+                            "python_date_format": null,
+                            "table_id": 30,
+                            "type": "JSON",
+                            "uuid": "496dec6c-d0bf-42d6-81c8-51c4e72b09f4",
+                            "verbose_name": null
+                        }
+                    }
+                ],
+                "database_id": 2,
+                "default_endpoint": null,
+                "description": null,
+                "extra": null,
+                "fetch_values_predicate": null,
+                "filter_select_enabled": false,
+                "main_dttm_col": "report_date",
+                "metrics": [
+                    {
+                        "__SqlMetric__": {
+                            "changed_by_fk": 1,
+                            "changed_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "created_by_fk": 1,
+                            "created_on": {
+                                "__datetime__": "2021-04-26T00:46:37"
+                            },
+                            "d3format": null,
+                            "description": null,
+                            "expression": "COUNT(*)",
+                            "extra": null,
+                            "id": 38,
+                            "metric_name": "count",
+                            "metric_type": "count",
+                            "table_id": 30,
+                            "uuid": "694ae35e-8275-4a98-8d74-36f3f2f33274",
+                            "verbose_name": "COUNT(*)",
+                            "warning_text": null
+                        }
+                    }
+                ],
+                "offset": 0,
+                "params": "{\"remote_id\": 30, \"database_name\": \"Crime\"}",
+                "schema": "kcmo",
+                "sql": null,
+                "table_name": "crime_2021_vw",
+                "template_params": null
+            }
+        }
+    ]
+}
