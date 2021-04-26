@@ -153,7 +153,7 @@ Navigate to [Apache Superset](http://localhost:8088/superset/welcome/) in your b
 
 #### Create connection to Postgres database
 
-Once in Superset, navigate to Data > Databases.
+Once in Superset, navigate to _Data > Databases_.
 
 ![](img/superset-create-database.png)
 
@@ -164,10 +164,11 @@ Once in Superset, navigate to Data > Databases.
 Click `Save`.
 
 #### Import Dashboard
+
 The dashboard export file is located in [superset/kansas-city-crime-dashboard-2021.json](superset/kansas-city-crime-dashboard-2021.json).
 
 In Superset, navigate to _Settings_ > _Import Dashboards_
-![](img/superset-import-dashboard.png)
+
 
 On the _Import Dashboard(s)_ dialogue, click `File` and navigate to [superset/kansas-city-crime-dashboard-2021.json](superset/kansas-city-crime-dashboard-2021.json).
 
