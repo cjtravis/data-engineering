@@ -1,7 +1,7 @@
 
 # Kansas City Crime Dashboard 🚓
 
-This project aims to make use of completely free and open source technologies to perform the orchestration, ingestion, storage, and execution found in a modern data pipeline.  The data is also freely available, courtesy of [Open Data KC](https://data.kcmo.org/). 
+This project aims to make use of completely free and open source technologies to perform the orchestration, ingestion, storage, and execution found in a modern data pipeline.  The underlying crime statistic data is also freely available, courtesy of [Open Data KC](https://data.kcmo.org/). 
 
 
 ![](img/kansas-city-crime-dashboard.jpg)
