@@ -1,0 +1,4 @@
+wheel
+fitparse==1.2.0
+confluent_kafka
+click
