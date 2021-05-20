@@ -1,0 +1,7 @@
+wheel
+fitparse==1.2.0
+confluent_kafka
+click
+confluent-kafka[avro]
+requests
+avro-python3

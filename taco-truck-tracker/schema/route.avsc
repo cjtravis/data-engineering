@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Location",
+        "namespace": "io.cjtravis.avro",
+        "doc": "Geospatial representation of where the stop occurred on the route.",
+        "type": "record",
+        "fields": [
+            {
+                "name": "lat",
+                "doc": "Latitude",
+                "type": "float"
+            },
+            {
+                "name": "lon",
+                "doc": "Longitude",
+                "type": "float"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "Route",
+        "namespace": "io.cjtravis.avro",
+        "doc": "This is a route record in a fictitious taco truck tracker app.",
+        "fields": [
+            {
+                "name": "activity_ts",
+                "doc": "Epoch millis date/time format of when the stop occurred.",
+                "type": "long"
+            },
+            {
+                "name": "route",
+                "doc": "Name of the taco truck route",
+                "type": "string"
+            },
+            {
+                "name": "route_event_id",
+                "doc": "",
+                "type": "int"
+            },
+            {
+                "name": "driver",
+                "doc": "Name of the taco truck operator",
+                "type": "string"
+            },
+            {
+                "name": "distance",
+                "doc": "",
+                "type": "float"
+            },
+            {
+                "name": "position_lat",
+                "doc": "",
+                "type": "long"
+            },
+            {
+                "name": "location",
+                "type": ["null", "string"]
+            },
+            {
+                "name": "location2",
+                "doc": "",
+                "type": ["null", "Location"]
+            },
+            {
+                "name": "position_long",
+                "doc": "",
+                "type": "long"
+            },
+            {
+                "name": "speed",
+                "doc": "",
+                "type": "float"
+            },
+            {
+                "name": "event_ts_human",
+                "doc": "Human readable date/time format of when the order occurred.",
+                "type": "string"
+            },
+            {
+                "name": "event_ts_epoch",
+                "doc": "Epoch millis date/time format of when the order occurred.",
+                "type": "long"
+            },
+            {
+                "name": "travel_distance_delta_meters",
+                "doc": "Distance traveled (meters) since last event.",
+                "type": "float"
+            }
+        ]
+    }
+]
