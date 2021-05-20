@@ -7,9 +7,7 @@ import click
 import random
 import uuid
 from random import randrange, randint
-from confluent_kafka import Producer, avro
-from confluent_kafka.avro import AvroProducer
-
+from confluent_kafka import Producer
 from multiprocessing import Process
 from datetime import datetime, timedelta
 from pprint import pprint
@@ -32,28 +30,19 @@ class Route():
         self.rate = rate
         self.density = density
         self.multiplier = float(multiplier)
-        self.kafka_config = {
-            'bootstrap.servers': '192.168.99.107:9092',
-            'on_delivery': self._delivery_report,
-            'schema.registry.url': 'http://192.168.99.107:8081'
-            }
-        self.default_key_schema = None
-        self.route_value_schema = avro.load("schema/route.avsc")
-        self.stop_value_schema = avro.load("schema/stop.avsc")
-        self.sale_value_schema = avro.loads("schema/sale.avsc")
-        self.route_producer = AvroProducer(self.kafka_config, default_key_schema=self.default_key_schema, default_value_schema=self.route_value_schema)
-        self.sales_producer = AvroProducer(self.kafka_config, default_key_schema=self.default_key_schema, default_value_schema=self.sale_value_schema)
-        self.stops_producer = AvroProducer(self.kafka_config, default_key_schema=self.default_key_schema, default_value_schema=self.stop_value_schema)
-        self.route_topic = 'routes' # 'route_' + str(self.route).lower()
-        self.order_topic = 'sales'
-        self.stop_topic = 'stops'
-        
-        #self.route_key = route + date + CHI_20210519
-        #self.order_topic_es = 'sales_payload'
+        self.kafka_config = {'bootstrap.servers': '192.168.99.107:9092'}
+        self.route_producer = Producer(self.kafka_config)
+        self.order_producer = Producer(self.kafka_config)
+        self.order_producer_es = Producer(self.kafka_config)
+        self.stop_producer = Producer(self.kafka_config)
+        self.route_topic = 'tacos_routes' # 'route_' + str(self.route).lower()
+        self.order_topic = 'tacos_orders'
+        self.stop_topic = 'tacos_stops'
+        self.order_topic_es = 'tacos_orders_payload'
         self.geo_fields = ['position_lat', 'position_long'] 
         self.fields = ['distance', 'position_lat', 'position_long', 'speed', 'timestamp']
-       
-       # menu
+
+            # Street tacos!
         self.tacos =[
             {"chips and salsa": 2},
             {"fresco": 3.50},
@@ -72,7 +61,6 @@ class Route():
             print('Message delivery failed: {}'.format(err))
         else:
             pass
-            # suppress successes
             #print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
 
     def _generate_stop(self, loc):
@@ -87,14 +75,22 @@ class Route():
             }
 
     def _create_order(self, stop_id):
+        #stop_choice = True if abs(randrange(11) - randrange(11)) < 2 else False
+        #print(stop_choice)
         sales_tax = .07
         drink_purchase = random.choice(self.drinks)
         food_purchase = random.choice(self.tacos)
 
         #print(drink_purchase)
         #print(taco_purchase)
+
+        #print(drink_purchase.values()[0])
         sub_total = sum([float(x) for x in list(drink_purchase.values())] + [float(x) for x in list(food_purchase.values())])
         sub_total = round(float(sub_total) * float(self.multiplier),2)
+
+        #print(sub_total)
+        #print(type(float(sub_total[0])))
+        #print(f'sub total: {str(sub_total[0])}')
 
         total = round(float(sub_total) * float(sales_tax),2) + sub_total
         # "items": [{
@@ -153,9 +149,10 @@ class Route():
                     if not lon and data.name == "position_long":
                         lon = self._degrees(data.value)
                 if lat and lon:
-                        #pass
                         self.activity['location'] = {"lat": lat, "lon": lon}
                 if data.name == "timestamp":
+                    #print(type(data.value))
+                    #print(data.value.strftime('%s'))
                     self.activity['event_ts_human'] = str(data.value)
                     self.activity['event_ts_epoch'] = int(data.value.strftime('%s'))
                 else:
@@ -164,7 +161,7 @@ class Route():
         return json.dumps(self.activity)
 
     def _execute(self):
-        # iterate FIT events
+        # iterate these
         self.raw_route_message = self._parse_file(self.route)
 
         self.record_counter = 1
@@ -181,47 +178,47 @@ class Route():
             #print(f'\n\n{json_pr}')
             print(f'Event # {self.record_counter}')
             if self.record_counter % self.density == 0 and 'location' in json.loads(producer_record):
-                self.route_producer.produce(topic=self.route_topic, value=json_pr, key=None)
+                self.route_producer.produce(self.route_topic, json.dumps(json_pr).encode('utf-8'), callback=self._delivery_report)
                 # should I stop?
-                # we_stop = True if abs(randrange(21) - randrange(21)) <= 2 else False
-                # # trigger stop event in kafka
-                # #print(type(json.loads(producer_record)))
-                # #print(json.loads(producer_record))
+                we_stop = True if abs(randrange(21) - randrange(21)) <= 2 else False
+                # trigger stop event in kafka
+                #print(type(json.loads(producer_record)))
+                #print(json.loads(producer_record))
                 
-                # ##self.stop_producer.flush()
-                # #print(stop_choice)
-                # if we_stop:
-                #     stop_record = self._generate_stop(json.loads(producer_record)["location"])
-                #     self.stop_producer.poll(0)
-                #     self.stop_producer.produce(self.stop_topic, json.dumps(stop_record).encode('utf-8'), callback=self._delivery_report)
-                #     self.stop_counter +=1
-                #     print(f'  Stop # {self.stop_counter}')
-                #     print(f'{self.driver}\'s stopping to sell some food.')
+                ##self.stop_producer.flush()
+                #print(stop_choice)
+                if we_stop:
+                    stop_record = self._generate_stop(json.loads(producer_record)["location"])
+                    self.stop_producer.poll(0)
+                    self.stop_producer.produce(self.stop_topic, json.dumps(stop_record).encode('utf-8'), callback=self._delivery_report)
+                    self.stop_counter +=1
+                    print(f'  Stop # {self.stop_counter}')
+                    print(f'{self.driver}\'s stopping to sell some food.')
 
-                #     # how many orders should we generate on this stop?
-                #     number_of_orders = randint(1,10)
-                #     print(f'Number of orders: {number_of_orders}')
-                #     for x in range(1, number_of_orders):
-                #         print(f'    Order {x} of {number_of_orders}')
-                #         order = self._create_order(stop_record["stop_id"])
-                #         # trigger order event in kafka
-                #         #self.order_producer.poll(0)
-                #         self.order_producer.produce(self.order_topic, json.dumps(order).encode('utf-8'), callback=self._delivery_report)
-                #         ##self.order_producer.flush()
-                #         print(order["payload"])
-                #         #time.sleep(1)
+                    # how many orders should we generate on this stop?
+                    number_of_orders = randint(1,10)
+                    print(f'Number of orders: {number_of_orders}')
+                    for x in range(1, number_of_orders):
+                        print(f'    Order {x} of {number_of_orders}')
+                        order = self._create_order(stop_record["stop_id"])
+                        # trigger order event in kafka
+                        #self.order_producer.poll(0)
+                        self.order_producer.produce(self.order_topic, json.dumps(order).encode('utf-8'), callback=self._delivery_report)
+                        ##self.order_producer.flush()
+                        print(order["payload"])
+                        #time.sleep(1)
                     
-                #     #for x in range(1, number_of_orders):
+                    #for x in range(1, number_of_orders):
 
-                #         # Cheat and send to Kafka for ES
-                #      #   print(order["payload"])
-                #         #self.order_producer_es.poll()
-                #         self.order_producer_es.produce(self.order_topic_es, json.dumps(order["payload"]).encode('utf-8'))
-                #         self.order_producer_es.flush()
+                        # Cheat and send to Kafka for ES
+                     #   print(order["payload"])
+                        #self.order_producer_es.poll()
+                        self.order_producer_es.produce(self.order_topic_es, json.dumps(order["payload"]).encode('utf-8'))
+                        self.order_producer_es.flush()
 
-                # #self.route_producer.produce(self.route_topic, json.dumps(json_pr).encode('utf-8'), callback=self._delivery_report)
+                #self.route_producer.produce(self.route_topic, json.dumps(json_pr).encode('utf-8'), callback=self._delivery_report)
                 
-                # time.sleep(self.rate)
+                time.sleep(self.rate)
             self.record_counter +=1
 
             self.route_producer.flush()
