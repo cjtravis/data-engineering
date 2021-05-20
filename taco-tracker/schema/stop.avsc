@@ -1,0 +1,63 @@
+[
+    {
+        "name": "Location",
+        "namespace": "io.cjtravis.avro",
+        "doc": "Geospatial representation of where the stop occurred on the route.",
+        "type": "record",
+        "fields": [
+            {
+                "name": "lat",
+                "doc": "Latitude",
+                "type": "float"
+            },
+            {
+                "name": "lon",
+                "doc": "Longitude",
+                "type": "float"
+            }
+        ]
+    },
+    {
+        "type": "record",
+        "name": "Stop",
+        "namespace": "io.cjtravis.avro",
+        "doc": "This is a stop record in a fictitious taco truck tracker app.",
+        "fields": [
+            {
+                "name": "stop_id",
+                "doc": "System-assigned UUID stop ID.",
+                "type": "string"
+            },
+            {
+                "name": "event_id",
+                "doc": "",
+                "type": "int"
+            },
+            {
+                "name": "driver",
+                "doc": "Name of the taco truck operator",
+                "type": "string"
+            },
+            {
+                "name": "route",
+                "doc": "Name of the taco truck route",
+                "type": "string"
+            },
+            {
+                "name": "location",
+                "doc": "Geospatial representation of where the stop occurred on the route.",
+                "type": "Location",
+            },
+            {
+                "name": "stop_date",
+                "doc": "Human readable date/time format of when the stop occurred.",
+                "type": "string"
+            },
+            {
+                "name": "MSG_TS",
+                "doc": "Epoch millis date/time format of when the stop occurred.",
+                "type": "long"
+            }
+        ]
+    }
+]
