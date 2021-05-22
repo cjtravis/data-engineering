@@ -33,9 +33,9 @@ class Route():
         self.density = density
         self.multiplier = float(multiplier)
         self.kafka_config = {
-            'bootstrap.servers': '192.168.99.107:9092',
+            'bootstrap.servers': '0.0.0.0:9092',
             'on_delivery': self._delivery_report,
-            'schema.registry.url': 'http://192.168.99.107:8081'
+            'schema.registry.url': 'http://0.0.0.0:8081'
             }
         #self.default_key_schema = None
         self.default_key_schema = avro.loads('{"type": "string"}')

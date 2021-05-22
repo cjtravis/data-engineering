@@ -5,3 +5,4 @@ kansas-city-crime/airflow/dags/__pycache__
 kansas-city-crime/airflow/dags/data
 kansas-city-crime/dags
 sophies-saltines/
+postgres/

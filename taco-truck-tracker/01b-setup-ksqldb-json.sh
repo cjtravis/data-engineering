@@ -1,5 +1,5 @@
 curl -s -X PUT -H  "Content-Type:application/json" \
-    http://192.168.99.107:8083/connectors/SINK_ELASTIC_ROUTE_01/config \
+    http://localhost:8083/connectors/SINK_ELASTIC_ROUTE_01/config \
     -d '{
             "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
             "connection.url":"http://elasticsearch:9200",
@@ -14,7 +14,7 @@ curl -s -X PUT -H  "Content-Type:application/json" \
 
 
 curl -s -X PUT -H  "Content-Type:application/json" \
-    http://192.168.99.107:8083/connectors/SINK_ELASTIC_ORDER_01/config \
+    http://localhost:8083/connectors/SINK_ELASTIC_ORDER_01/config \
     -d '{
             "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
             "connection.url":"http://elasticsearch:9200",
@@ -30,7 +30,7 @@ curl -s -X PUT -H  "Content-Type:application/json" \
 
 
 curl -s -X PUT -H  "Content-Type:application/json" \
-    http://192.168.99.107:8083/connectors/SINK_ELASTIC_STOPS_01/config \
+    http://localhost:8083/connectors/SINK_ELASTIC_STOPS_01/config \
     -d '{
             "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
             "connection.url":"http://elasticsearch:9200",
