@@ -1,353 +1,132 @@
-## Consume using Kafkacat
+
+# Monster Tacos 🌮
+Monster Tacos™️ is the (fictitious) revolutionary new food truck experience unlike any seen before.  It's like an ice cream truck for tacos...delivered by monster trucks.  
+
+![](img/dashboard.png)
+
+|||
+|-|-|
+|![](img/kc-zoom.png)| ![](img/stl-zoom.png)|
+## Project Overview
+Monster Tacos operates in three US cities: 
+Kansas City, St. Louis, and Chicago.  
+
+This project makes use of several open source technologies including Apache Kafka, Elasticsearch, and Postgres.  
+
+The opereational data produced is simple: 
+- one lat/lon tracking event along the predefined _route_ generated from an onboard device such as an [ELD](https://en.wikipedia.org/wiki/Electronic_logging_device)
+- one event per _stop_ along the **route**
+- one to many _sales_ transactions per **stop** along the **route**
+
+A simple python application is responsible for producing these events to three topics in Apache Kafka: routes, stops, and sales.  The generated events are serialized using Avro and managed using the Confluent Schema Registry.  ksqlDB is used to deploy _Kafka Connect_ sink connectors to ElasticSearch and Postgres.  Finally, Kibana is used as a tool to aggregate and visualize the metrics received in real-time from the custom dashboard, [_Taco Tracker 2000_](http://localhost:5601/app/dashboards).
+
+Afterall, who doesn't like tacos and monster trucks?
+
+## Tech Stack
+
+**Applications**
+- [Confluent ksqlDB](https://ksqldb.io/)
+- [Confluent Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html)
+
+**Containerization**
+- Docker
+- docker-compose
+
+**Languages**
+- Python
+
+**Serialization**
+- Avro
+
+**Storage**
+- Elasticsearch
+- Kafka
+- Postgres
+
+**Visualization**
+- Kibana
+
+## Data Model
+![](img/data-model.png)
+
+## Deployment
+**Start up environment**
 ```bash
-docker exec kafkacat kafkacat \
-    -b broker:29092 \
-    -C -o beginning -e -q \
-    -t demo \
-    -f 'Topic+Partition+Offset: %t+%p+%o\tKey: %k\tValue:%s\n'
+docker-compose up -d
 ```
-
-Output:
+**Deploy Elasticsearch artifacts**
 ```bash
-Topic+Partition+Offset: demo+0+2579	Key: 	Value:{"MSG_TS": 1620934682, "event_key": "CHICAGO", "event_id": 2580, "distance": 42780.37, "position_lat": 499521554, "location": {"lat": 41.86941297724843, "lon": -87.6205862313509}, "position_long": -1045354312, "speed": 3.35, "event_ts_human": "2017-10-08 16:05:14", "event_ts_epoch": 1507496714}
-Topic+Partition+Offset: demo+0+2580	Key: 	Value:{"MSG_TS": 1620934682, "event_key": "CHICAGO", "event_id": 2581, "distance": 42800.94, "position_lat": 499523765, "location": {"lat": 41.86959830112755, "lon": -87.62058313004673}, "position_long": -1045354275, "speed": 3.368, "event_ts_human": "2017-10-08 16:05:20", "event_ts_epoch": 1507496720}
-Topic+Partition+Offset: demo+0+2581	Key: 	Value:{"MSG_TS": 1620934682, "event_key": "CHICAGO", "event_id": 2582, "distance": 42809.43, "position_lat": 499524680, "location": {"lat": 41.86967499554157, "lon": -87.62057818472385}, "position_long": -1045354216, "speed": 3.359, "event_ts_human": "2017-10-08 16:05:23", "event_ts_epoch": 1507496723}
+scripts/00-setup-elastic-local.sh
 ```
 
-**Prettier using `jq`**
+**Deploy Kafka Connect sink connectors**
 ```bash
-docker exec kafkacat kafkacat \
-    -b broker:29092 \
-    -C -o beginning -e -q \
-    -t demo \
-    -f '%s'
-```
-Output:
-```json
-{
-  "MSG_TS": 1620934682,
-  "event_key": "CHICAGO",
-  "event_id": 2581,
-  "distance": 42800.94,
-  "position_lat": 499523765,
-  "location": {
-    "lat": 41.86959830112755,
-    "lon": -87.62058313004673
-  },
-  "position_long": -1045354275,
-  "speed": 3.368,
-  "event_ts_human": "2017-10-08 16:05:20",
-  "event_ts_epoch": 1507496720
-}
-{
-  "MSG_TS": 1620934682,
-  "event_key": "CHICAGO",
-  "event_id": 2582,
-  "distance": 42809.43,
-  "position_lat": 499524680,
-  "location": {
-    "lat": 41.86967499554157,
-    "lon": -87.62057818472385
-  },
-  "position_long": -1045354216,
-  "speed": 3.359,
-  "event_ts_human": "2017-10-08 16:05:23",
-  "event_ts_epoch": 1507496723
-}
+scripts/01-setup-ksqldb-avro-local.sh
 ```
 
-Paul, Scott, and Chad Tranport
-
-
-##Setup
-**Deploy Kafka Connector**
+**Verify Connectors are running**
 ```bash
-docker exec -it ksqldb ksql http://ksqldb:8088
-```
-
-**Method 1: Using ksqlDB**
-```sql
-CREATE SINK CONNECTOR SINK_ELASTIC_ROUTE_01 WITH (
-  'connector.class'                     = 'io.confluent.connect.elasticsearch.ElasticsearchSinkConnector',
-  'connection.url'                      = 'http://elasticsearch:9200',
-  'key.converter'                       = 'org.apache.kafka.connect.storage.StringConverter',
-  'type.name'                           = '_doc',
-  'topics'                              = 'tacos_route',
-  'key.ignore'                          = 'true',
-  'schema.ignore'                       = 'true',
-  'value.converter'                     = 'org.apache.kafka.connect.json.JsonConverter',
-  'value.converter.schemas.enable'      = 'false'
-);
-
-CREATE SINK CONNECTOR SINK_ELASTIC_STOP_01 WITH (
-  'connector.class'                     = 'io.confluent.connect.elasticsearch.ElasticsearchSinkConnector',
-  'connection.url'                      = 'http://elasticsearch:9200',
-  'key.converter'                       = 'org.apache.kafka.connect.storage.StringConverter',
-  'type.name'                           = '_doc',
-  'topics'                              = 'tacos_stops',
-  'key.ignore'                          = 'true',
-  'schema.ignore'                       = 'true',
-  'value.converter'                     = 'org.apache.kafka.connect.json.JsonConverter',
-  'value.converter.schemas.enable'      = 'false'
-);
-
-CREATE SINK CONNECTOR SINK_ELASTIC_ORDER_01 WITH (
-  'connector.class'                     = 'io.confluent.connect.elasticsearch.ElasticsearchSinkConnector',
-  'connection.url'                      = 'http://elasticsearch:9200',
-  'key.converter'                       = 'org.apache.kafka.connect.storage.StringConverter',
-  'type.name'                           = '_doc',
-  'topics'                              = 'tacos_orders',
-  'key.ignore'                          = 'true',
-  'schema.ignore'                       = 'true',
-  'value.converter'                     = 'org.apache.kafka.connect.json.JsonConverter',
-  'value.converter.schemas.enable'      = 'false'
-);
-
-CREATE SINK CONNECTOR SINK_ELASTIC_ORDER_02 WITH (
-  'connector.class'                     = 'io.confluent.connect.elasticsearch.ElasticsearchSinkConnector',
-  'connection.url'                      = 'http://elasticsearch:9200',
-  'key.converter'                       = 'org.apache.kafka.connect.storage.StringConverter',
-  'type.name'                           = '_doc',
-  'topics'                              = 'tacos_orders_payload',
-  'key.ignore'                          = 'true',
-  'schema.ignore'                       = 'true',
-  'value.converter'                     = 'org.apache.kafka.connect.json.JsonConverter',
-  'value.converter.schemas.enable'      = 'false'
-);
-
-
-CREATE SINK CONNECTOR SINK_POSTGRES_ORDER_01 WITH (
-  'connector.class'                     = 'io.confluent.connect.jdbc.JdbcSinkConnector',
-  'connection.url'                      = 'jdbc:postgresql://postgres:5432/demo',
-  'connection.user'                     = 'master',
-  'connection.password'                  = 'postgres',
-  'key.converter'                       = 'org.apache.kafka.connect.storage.StringConverter',
-  'topics'                              = 'tacos_orders',
-  'key.ignore'                          = 'true',
-  'value.converter'                     = 'org.apache.kafka.connect.json.JsonConverter',
-  'auto.create'                         = 'true',
-  'auto.evolve'                         = 'true',
-  'pk.mode'                             = 'kafka',
-  'table.name.format'                   = 'public.orders',
-  'insert.mode'                         = 'upsert',
-  'value.converter.schemas.enable'      = 'true'
-);
-
-
-show connectors;
-```
-
-**Method 2: Using curl & Kafka Connect Rest endpoint**
-```bash
-$ curl -i -X PUT -H  "Content-Type:application/json" \
-    http://192.168.99.107:8083/connectors/SINK_ELASTIC_ROUTE_01/config \
-    -d '{
-            "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
-            "connection.url":"http://elasticsearch:9200",
-            "key.converter":"org.apache.kafka.connect.storage.StringConverter",
-            "type.name":"_doc",
-            "topics":"tacos_route",
-            "key.ignore":"true",
-            "schema.ignore":"true",
-            "value.converter":"org.apache.kafka.connect.json.JsonConverter",
-            "value.converter.schemas.enable":"false"
-    }'
-
-$ curl -i -X PUT -H  "Content-Type:application/json" \
-    http://192.168.99.107:8083/connectors/SINK_ELASTIC_ORDER_01/config \
-    -d '{
-            "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
-            "connection.url":"http://elasticsearch:9200",
-            "key.converter":"org.apache.kafka.connect.storage.StringConverter",
-            "type.name":"_doc",
-            "topics":"tacos_orders",
-            "key.ignore":"true",
-            "schema.ignore":"true",
-            "value.converter":"org.apache.kafka.connect.json.JsonConverter",
-            "value.converter.schemas.enable":"false"
-    }'
-
-
-$ curl -i -X PUT -H  "Content-Type:application/json" \
-    http://192.168.99.107:8083/connectors/SINK_POSTGRES_ORDER_01/config \
-    -d '{
-            "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-            "connection.url":"jdbc:postgresql://postgres:5432/demo",
-            "connection.user":"master",
-            "connection.password":"postgres",
-            "key.converter":"org.apache.kafka.connect.storage.StringConverter",
-            "topics":"tacos_orders",
-            "key.ignore":"true",
-            "value.converter":"org.apache.kafka.connect.json.JsonConverter",
-            "auto.create":"true",
-            "auto.evolve":"true",
-            "pk.mode":"kafka",
-            "table.name.format":"public.orders",
-            "insert.mode":"upsert",
-            "value.converter.schemas.enable":"true"
-    }'
-
-HTTP/1.1 201 Created
-Date: Sun, 16 May 2021 14:40:25 GMT
-Location: http://192.168.99.107:8083/connectors/SINK_POSTGRES_ORDER_01
-Content-Type: application/json
-Content-Length: 615
-Server: Jetty(9.4.33.v20201020)
-
-{"name":"SINK_POSTGRES_ORDER_01","config":{"connector.class":"io.confluent.connect.jdbc.JdbcSinkConnector","connection.url":"jdbc:postgresql://postgres:5432/demo","connection.user":"master","connection.password":"postgres","key.converter":"org.apache.kafka.connect.storage.StringConverter","topics":"tacos_orders","key.ignore":"true","value.converter":"org.apache.kafka.connect.json.JsonConverter","auto.create":"true","auto.evolve":"true","pk.mode":"kafka","table.name.format":"public.orders","insert.mode":"upsert","value.converter.schemas.enable":"true","name":"SINK_POSTGRES_ORDER_01"},"tasks":[],"type":"sink"}%  
-
-$ curl -s http://192.168.99.107:8083/connectors/SINK_POSTGRES_ORDER_01/status | jq .
-{
-  "name": "SINK_POSTGRES_ORDER_01",
-  "connector": {
-    "state": "RUNNING",
-    "worker_id": "kafka-connect:8083"
-  },
-  "tasks": [
-    {
-      "id": 0,
-      "state": "RUNNING",
-      "worker_id": "kafka-connect:8083"
-    }
-  ],
-  "type": "sink"
-}
-```
-**Deploy ElasticSearch Index Pattern**
-```bash
-curl --silent --show-error -XPUT -H 'Content-Type: application/json' \
-    http://192.168.99.107:9200/_index_template/tacos/ \
-    -d'{
-        "index_patterns": [ "tacos*" ],
-        "template": {
-            "mappings": {
-                "properties": {
-                    "MSG_TS": {
-                    "type": "date"
-                    },
-                    "location": {
-                    "type": "geo_point"
-                    }
-                }
-            }
-        } }'
-```
-
-**Verify**
-```bash
-curl -s -XGET http://localhost:9200/_index_template/route/ |  jq .
-{
-  "index_templates": [
-    {
-      "name": "route",
-      "index_template": {
-        "index_patterns": [
-          "route*"
-        ],
-        "template": {
-          "mappings": {
-            "properties": {
-              "MSG_TS": {
-                "type": "date"
-              },
-              "location": {
-                "type": "geo_point"
-              }
-            }
-          }
-        },
-        "composed_of": []
-      }
-    }
-  ]
-}
-```
-**Delete Index Pattern**
-```bash
-curl -s -XDELETE http://192.168.99.107:9200/_index_template/order/ |  jq .
-{
-  "acknowledged": true
-}
+docker exec -it ksqldb ksql http://localhost:8088
 ```
 
 ```bash
-sudo apt-get install openjdk-8-jre openssh-server 
-cd ~/Downloads && curl https://mirror.nodesdirect.com/apache/kafka/2.8.0/kafka_2.13-2.8.0.tgz -o kafka-2.8.0.tgz
-mkdir ~/kafka && cd ~/kafka
-tar -xvzf ~/Downloads/kafka-2.8.0.tgz --strip 1
+OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
 
+                  ===========================================
+                  =       _              _ ____  ____       =
+                  =      | | _____  __ _| |  _ \| __ )      =
+                  =      | |/ / __|/ _` | | | | |  _ \      =
+                  =      |   <\__ \ (_| | | |_| | |_) |     =
+                  =      |_|\_\___/\__, |_|____/|____/      =
+                  =                   |_|                   =
+                  =  Event Streaming Database purpose-built =
+                  =        for stream processing apps       =
+                  ===========================================
+
+Copyright 2017-2020 Confluent Inc.
+
+CLI v0.15.0, Server v0.15.0 located at http://localhost:8088
+Server Status: RUNNING
+
+Having trouble? Type 'help' (case-insensitive) for a rundown of how things work!
+
+ksql> show connectors;
+
+ Connector Name         | Type | Class                                                         | Status
+-----------------------------------------------------------------------------------------------------------------------------
+ SINK_ELASTIC_ROUTES_01 | SINK | io.confluent.connect.elasticsearch.ElasticsearchSinkConnector | RUNNING (1/1 tasks RUNNING)
+ SINK_ELASTIC_STOPS_01  | SINK | io.confluent.connect.elasticsearch.ElasticsearchSinkConnector | RUNNING (1/1 tasks RUNNING)
+ SINK_ELASTIC_SALES_01  | SINK | io.confluent.connect.elasticsearch.ElasticsearchSinkConnector | RUNNING (1/1 tasks RUNNING)
+-----------------------------------------------------------------------------------------------------------------------------
 ```
 
+> Note: If you notice any of the containers crashing, try increasing the amount of RAM allocated to the docker service.  I specifically had to do this in order to keep Elasticsearch up and running.
 
-## Interacting with Kafka
-**List topics**
+
+**Create Python virtual environment**
 ```bash
-cd ~/kafka
-bin/kafka-topics.sh --bootstrap-server=192.168.99.107:9092 --list
-bin/kafka-topics.sh --bootstrap-server=192.168.99.107:9092 --delete --topic tacos_orders
-bin/kafka-topics.sh --bootstrap-server=192.168.99.107:9092 --delete --topic tacos_routes
+pip3 install virtualenv
 
+python3 -m venv ./venv/monster-tacos
+
+source ./venv/monster-tacos/bin/activate
+
+pip3 install -r requirements.txt
 ```
 
-
-**Run the app**
+**Deploy _Taco Tracker 2000_ Dashboard**
 ```bash
-
-python app.py --help
-Usage: app.py [OPTIONS]
-
-Options:
-  --route TEXT    Choices are: 'CHI', 'KC', or 'LIB'
-  --driver TEXT   The name of the driver performing the route
-  --rate INTEGER  The rate at which to process the data
-  --help          Show this message and exit.
-
-python app.py --driver='Paul' --route='KC' --rate=6
-python app.py --driver='Scott' --route='CHI' --rate=3
-python app.py --driver='Chad' --route='LIB' --rate=1.5
-python app.py --driver='Scott' --route='CHI' --rate=3 --density 7
+curl -X POST http://localhost:5601/api/saved_objects/_import?overwrite=true -H "kbn-xsrf: true" --form file=@kibana/taco-tracker-dashboard.ndjson -H 'kbn-xsrf: true'
 ```
 
+## Services
 
-## CLI Tricks
-**List all running connectors**
-```bash
-# Source: https://rmoff.net/2018/12/03/kafka-connect-cli-tricks/
-curl -s "http://192.168.99.107:8083/connectors"| \
-jq '.[]'| \
-xargs -I{connector_name} curl -s "http://192.168.99.107:8083/connectors/"{connector_name}"/status"| jq -c -M '[.name,.connector.state,.tasks[].state]|join(":|:")'| \
-column -s : -t| \
-sed 's/\"//g'| \
-sort
-```
+|Service Name|Function|Endpoint |
+|----|---|---|
+|Kibana|Visualization|http://localhost:5601/app/home|
+|Elasticseach|Index Store|http://localhost:9200|
+|Kafka|| localhost:9092|
+| | | |
 
-```bash
-# create index pattern in es
-curl -X POST http://192.168.99.107:5601/api/saved_objects/index-pattern/index-pattern-id  -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d '\n{\n  "attributes": {\n    "title": "my-index-*"\n  }\n}'
-
-curl -X POST http://192.168.99.107:5601/api/saved_objects/index-pattern/tacos_route -H 'kbn-xsrf: true' \
--H 'Content-Type: application/json' \
--d '{ "attributes": {
-    "title": "tacos_route*",
-    "timeFieldName": "MSG_TS"
-  }
-}'
-
-
-curl -X POST http://192.168.99.107:5601/api/saved_objects/index-pattern/tacos_order -H 'kbn-xsrf: true' \
--H 'Content-Type: application/json' \
--d '{ "attributes": {
-    "title": "tacos_order*",
-    "timeFieldName": "MSG_TS"
-  }
-}'
-
-
-```
-
-"attributes": {
-    "fieldAttrs": "{}",
-    "title": "tacos_route*",
-    "timeFieldName": "MSG_TS",
-    "fields": "[]"
-  }
+## References
+The [docker-compose.yml](docker-compose.yml) was modified from its original version, made by [Robin Moffatt](https://github.com/rmoff) of Confluent and may be [found here](https://github.com/confluentinc/demo-scene/blob/master/kafka-to-elasticsearch/docker-compose.yml).

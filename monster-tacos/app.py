@@ -48,9 +48,6 @@ class Route():
         self.route_topic = 'routes' # 'route_' + str(self.route).lower()
         self.sale_topic = 'sales'
         self.stop_topic = 'stops'
-        
-        #self.route_key = route + date + CHI_20210519
-        #self.sale_topic_es = 'sales_payload'
         self.geo_fields = ['position_lat', 'position_long'] 
         self.fields = ['distance', 'position_lat', 'position_long', 'speed', 'timestamp']
        
@@ -92,40 +89,9 @@ class Route():
         drink_purchase = random.choice(self.drinks)
         food_purchase = random.choice(self.tacos)
 
-        #print(drink_purchase)
-        #print(taco_purchase)
         sub_total = sum([float(x) for x in list(drink_purchase.values())] + [float(x) for x in list(food_purchase.values())])
         sub_total = round(float(sub_total) * float(self.multiplier),2)
-
         total = round(float(sub_total) * float(sales_tax),2) + sub_total
-        # "items": [{
-        #     **taco_purchase, 
-        #     **drink_purchase}],
-        message = {
-            "schema": {
-                "type": "struct", "optional": False, "version": 1, "fields": [
-                { "field": "stop_id", "type": "string", "optional": True },
-                { "field": "sale_id", "type": "string", "optional": True },
-                { "field": "driver", "type": "string", "optional": True },
-                { "field": "route", "type": "string", "optional": True },
-                { "field": "event_id", "type": "int64", "optional": True },
-                { "field": "sale_date", "type": "string", "optional": True },
-                { "field": "sub_total", "type": "float", "optional": True },
-                { "field": "total", "type": "float", "optional": True },
-                { "field": "activity_ts", "type": "int64", "optional": True }
-                ] },
-            "payload": {
-                "stop_id": stop_id,
-                "sale_id": str(uuid.uuid4()),
-                "driver": self.driver, 
-                "route": self.route,
-                "event_id": self.record_counter,
-                "sale_date": datetime.now().strftime("%b-%d-%Y %H:%M:%S"),
-                "sub_total":sub_total,
-                "total": total,
-                "activity_ts": int(datetime.now().strftime("%s")) * 1000
-            }
-        }
 
         return {
                 "stop_id": stop_id,
@@ -179,31 +145,27 @@ class Route():
     def _execute(self):
         # iterate FIT events
         self.raw_route_message = self._parse_file(self.route)
-
         self.record_counter = 1
         self.stop_counter = 0
         checkpoints = [0]
     
         for record in self.raw_route_message.get_messages("record"):
+
             self.route_producer.poll(0)
             event_record = self._event_record_builder(self.record_counter, record)
             json_pr = json.loads(event_record)
             json_pr['travel_distance_delta_meters'] = round(json_pr['distance'] - checkpoints.pop(),2)
             checkpoints.append(json_pr['distance'])
-            #self.route_producer.produce(self.route_topic, json.dumps(json_pr).encode('utf-8'), callback=self._delivery_report)
-            #print(f'\n\n{json_pr}')
+
             print(f'Event # {self.record_counter}')
             if self.record_counter % self.density == 0 and 'location' in json.loads(event_record):
+
                 route_key = self.route + '-' + str(self.record_counter)
                 self.route_producer.produce(topic=self.route_topic, value=json_pr, key=route_key)
+                
                 # should I stop?
                 we_stop = True if abs(randrange(21) - randrange(21)) <= 2 else False
-                # trigger stop event in kafka
-                #print(type(json.loads(event_record)))
-                #print(json.loads(event_record))
                 
-                ##self.stops_producer.flush()
-                #print(stop_choice)
                 if we_stop:
                     stop_record = self._generate_stop(json.loads(event_record)["location"])
                     self.stops_producer.poll(0)
@@ -217,34 +179,21 @@ class Route():
                     print(f'Number of sales: {number_of_sales}')
                     for x in range(1, number_of_sales):
                         print(f'    sale {x} of {number_of_sales}')
-                        #print(stop_record["stop_id"])
                         sale_record = self._generate_sale(stop_record["stop_id"])
-                        # trigger sale event in kafka
+                        
+                        # send sale event to kafka
                         self.sales_producer.poll(0)
                         self.sales_producer.produce(topic=self.sale_topic, value=sale_record, key=sale_record["sale_id"])
-                        
-                        #print(sale_record["payload"])
-                        #time.sleep(1)
+
                     self.sales_producer.flush()
-                    
-                    #for x in range(1, number_of_sales):
 
-                        # Cheat and send to Kafka for ES
-                     #   print(sale["payload"])
-                        #self.sales_producer_es.poll()
-                        ##self.sales_producer_es.produce(self.sale_topic_es, json.dumps(sale_record["payload"]).encode('utf-8'))
-                        ##self.sales_producer_es.flush()
-
-                #self.route_producer.produce(self.route_topic, json.dumps(json_pr).encode('utf-8'), callback=self._delivery_report)
-                
                 time.sleep(self.rate)
-            self.record_counter +=1
 
+            self.record_counter +=1
             self.route_producer.flush()
 
     def run(self):
         self._execute()
-        #self._generate_sale()
 
 if __name__ == '__main__':
     app()
