@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 from pprint import pprint
 
 @click.command()
-@click.option('--route', help='Choices are: \'CHI\', \'KC\', or \'LIB\'')
+@click.option('--route', help='Choices are: \'CHI\', \'KC\', or \'STL\'')
 @click.option('--driver', help='The name of the driver performing the route')
 @click.option('--rate', default=3, help='The rate at which to process the data')
 @click.option('--density', default=3, help='Controls how dense/sparse the data is emitted')
@@ -37,7 +37,7 @@ class Route():
             'on_delivery': self._delivery_report,
             'schema.registry.url': 'http://0.0.0.0:8081'
             }
-        #self.default_key_schema = None
+
         self.default_key_schema = avro.loads('{"type": "string"}')
         self.route_value_schema = avro.load("schema/route.avsc")
         self.stop_value_schema = avro.load("schema/stop.avsc")
@@ -53,14 +53,18 @@ class Route():
        
        # menu
         self.tacos =[
-            {"chips and salsa": 2},
-            {"fresco": 3.50},
-            {"grilled steak": 4.50}
+            {"Avenger": 4.00},
+            {"Grave Digger": 5.50},
+            {"Bigfoot": 6.50},
+            {"Swamp Thing": 5.00},
+            {"Bulldozer": 5.00},
+            {"Maximum Destruction": 10.00},
+            {"Snake Bite": 7.00}
         ]
         
         self.drinks =[
-            {"liter-a-cola": 5},
-            {"water": 6}
+            {"Liter-a-Cola": 5},
+            {"Water": 6}
         ]
 
     def _delivery_report(self, err, msg):
@@ -167,6 +171,7 @@ class Route():
                 we_stop = True if abs(randrange(21) - randrange(21)) <= 2 else False
                 
                 if we_stop:
+                    # generate a stop record
                     stop_record = self._generate_stop(json.loads(event_record)["location"])
                     self.stops_producer.poll(0)
                     self.stops_producer.produce(topic=self.stop_topic, value=stop_record, key=stop_record["stop_id"])
@@ -174,14 +179,14 @@ class Route():
                     print(f'  Stop # {self.stop_counter}')
                     print(f'{self.driver}\'s stopping to sell some food.')
 
-                    # how many sales should we generate on this stop?
+                    # how many sales (between 1-10) should we generate on this stop?
                     number_of_sales = randint(1,10)
                     print(f'Number of sales: {number_of_sales}')
                     for x in range(1, number_of_sales):
                         print(f'    sale {x} of {number_of_sales}')
                         sale_record = self._generate_sale(stop_record["stop_id"])
                         
-                        # send sale event to kafka
+                        # generate a sales record
                         self.sales_producer.poll(0)
                         self.sales_producer.produce(topic=self.sale_topic, value=sale_record, key=sale_record["sale_id"])
 
