@@ -131,7 +131,11 @@ CREATE SINK CONNECTOR SINK_POSTGRES_ORDER_01 WITH (
   'pk.mode'                             = 'kafka',
   'table.name.format'                   = 'public.orders',
   'insert.mode'                         = 'upsert',
-  'value.converter.schemas.enable'      = 'true'
+  'value.converter.schemas.enable'      = 'true',
+   'value.converter'                     = 'io.confluent.connect.avro.AvroConverter',
+  'value.converter.schema.registry.url' = 'http://schema-registry:8081',
+  'key.converter'                       = 'io.confluent.connect.avro.AvroConverter',
+  'key.converter.schema.registry.url'   = 'http://schema-registry:8081',
 );
 
 
