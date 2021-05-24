@@ -1,0 +1,53 @@
+{
+    "type": "record",
+    "name": "Sale",
+    "namespace": "io.cjtravis.avro",
+    "doc": "This is a sale recorsd in a fictitious taco truck tracker app.",
+    "fields": [
+        {
+            "name": "stop_id",
+            "doc": "System-assigned UUID stop ID.",
+            "type": "string"
+        },
+        {
+            "name": "sale_id",
+            "doc": "System-assigned UUID order ID.",
+            "type": "string"
+        },
+        {
+            "name": "driver",
+            "doc": "Name of the taco truck operator",
+            "type": "string"
+        },
+        {
+            "name": "route",
+            "doc": "Name of the taco truck route",
+            "type": "string"
+        },
+        {
+            "name": "route_event_id",
+            "doc": "",
+            "type": "int"
+        },
+        {
+            "name": "sale_date",
+            "doc": "Human readable date/time format of when the order occurred.",
+            "type": "string"
+        },
+        {
+            "name": "sub_total",
+            "doc": "Pre-sales tax order amount",
+            "type": "float"
+        },
+        {
+            "name": "total",
+            "doc": "Total order amount.",
+            "type": "float"
+        },
+        {
+            "name": "activity_ts",
+            "doc": "Epoch millis date/time format of when the stop occurred.",
+            "type": "long"
+        }
+    ]
+}
