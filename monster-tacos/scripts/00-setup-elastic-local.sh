@@ -84,5 +84,5 @@ curl -s -X POST http://localhost:5601/api/saved_objects/index-pattern/tacos_sale
 
 
 echo -e "\nImporting Taco Tracker 2000 Dashboard from local file\n"
-cd ../
+
 curl -X POST http://localhost:5601/api/saved_objects/_import?overwrite=true -H "kbn-xsrf: true" --form file=@kibana/taco-tracker-dashboard.ndjson -H 'kbn-xsrf: true'
