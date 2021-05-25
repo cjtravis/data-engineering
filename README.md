@@ -15,8 +15,8 @@ A collection of various projects demonstrating usage of popular modern platforms
   <tr>
     <th colspan="1">Tier</th>
     <th>Solution</th>
-    <td colspan="1"><a href="./kansas-city-crime/README.md">Kansas City Crime Dashboard 🚓 </a> </td>
-    <td colspan="1"><a href="./monster-tacos/README.md">Monster Tacos 🌮</a></td>
+    <td colspan="1"><a href="./kansas-city-crime/README.md">Kansas City Crime <br> Dashboard 🚓 </a> </td>
+    <td colspan="1"><a href="./monster-tacos/README.md">Monster <br/>Tacos 🌮</a></td>
   </tr>
   <tr>
     <th rowspan=4>Data / Storage</th>
